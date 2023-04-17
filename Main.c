@@ -3,47 +3,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include "GameMath.h"
+#include "GameObjects.h"
+#include "Physics.h"
 
 #define WIDTH 1280
 #define HEIGHT 720
-
-typedef struct {
-	float top;
-	float bottom;
-	float left;
-	float right;
-	float front;
-	float back;
-} CubeFaces;
-
-typedef struct {
-	Vector3 pos;
-	float width;
-	float height;
-	float length;
-	Color color;
-	CubeFaces cube_faces;
-} Cube;
-
-typedef struct {
-	Vector3 pos;
-	float width;
-	float height;
-	float length;
-	Color color;
-} Plate;
-
-float lerp(float v0, float v1, float t) {
-	return (1 - t) * v0 + t * v1;
-}
-
-int collision_AABB(Cube cube1, Cube cube2) {
-	int x_collision = cube1.cube_faces.right >= cube2.cube_faces.left && cube1.cube_faces.left <= cube2.cube_faces.right;
-	int y_collision = cube1.cube_faces.top >= cube2.cube_faces.bottom && cube1.cube_faces.bottom <= cube2.cube_faces.top;
-	int z_collision = cube1.cube_faces.front >= cube2.cube_faces.back && cube1.cube_faces.back <= cube2.cube_faces.front;
-
-	return x_collision & y_collision & z_collision;
-}
 
 int main(void) {
 	InitWindow(WIDTH, HEIGHT, "3D Sokoban");
