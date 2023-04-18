@@ -19,6 +19,7 @@ typedef struct {
 	CubeFaces cube_faces;
 	Vector3 scale;
 	float rotation_angle;
+	Model model;
 } Cube;
 
 typedef struct {

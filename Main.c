@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <raylib.h>
-#include <rlgl.h>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
@@ -61,7 +60,7 @@ int main(void) {
 
 	int can_draw_next_stage_plate = 0;
 
-	Model model = LoadModel("Assets/Knight.obj");
+	player.model = LoadModel("Assets/Knight.obj");
 
 	Vector3 default_rotation_axis = (Vector3){ 0.0f, 1.0f, 0.0f };
 
@@ -135,8 +134,8 @@ int main(void) {
 		DrawCube(interaction_cube.pos, interaction_cube.width, interaction_cube.height, interaction_cube.length, interaction_cube.color);
 		DrawCube(plate.pos, plate.width, plate.height, plate.length, plate.color);
 
-		DrawModelEx(model, player.pos, default_rotation_axis, player.rotation_angle, (Vector3) { 0.1f, 0.1f, 0.1f }, player.color);
-		DrawCubeWires(player.pos, player.width, player.height, player.length, player.color);
+		DrawModelEx(player.model, player.pos, default_rotation_axis, player.rotation_angle, (Vector3) { 0.1f, 0.1f, 0.1f }, player.color);
+		DrawCubeWires(player.pos, player.width, player.height, player.length, BLACK);
 
 		DrawCubeWires(interaction_cube.pos, interaction_cube.width, interaction_cube.height, interaction_cube.length, interaction_cube.color);
 
@@ -154,6 +153,8 @@ int main(void) {
 
 		EndDrawing();
 	}
+
+	UnloadModel(player.model);
 
 	return 0;
 }
