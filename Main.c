@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <raylib.h>
+#include <rlgl.h>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
@@ -15,8 +16,37 @@ int main(void) {
 	
 	SetTargetFPS(60);
 
-	Cube player = { (Vector3) { 0.0f, 0.0f, 0.0f }, 2.0f, 2.0f, 2.0f, BLUE, (CubeFaces) { 0.0f,0.0f, 0.0f, 0.0f, 0.0f, 0.0f } };
-	Cube interaction_cube = { (Vector3) { 0.0f, 0.0f, -5.0f }, 2.0f, 2.0f, 2.0f, RED, (CubeFaces) { 0.0f,0.0f, 0.0f, 0.0f, 0.0f, 0.0f } };
+	Cube player = {
+		(Vector3) {
+			0.0f, 0.0f, 0.0f
+		},
+		2.0f,
+		2.0f,
+		2.0f,
+		WHITE,
+		(CubeFaces) {
+		0.0f,0.0f, 0.0f, 0.0f, 0.0f, 0.0f
+		},
+		(Vector3) { 
+			0.1f, 0.1f, 0.1f 
+		},
+		0.0f
+	};
+
+	Cube interaction_cube = { 
+		(Vector3) { 
+			0.0f, 0.0f, -5.0f 
+		},
+		2.0f, 
+		2.0f, 
+		2.0f, 
+		RED, 
+		(CubeFaces) {
+			0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
+		},
+		0.0f
+	};
+	
 	Plate plate = { (Vector3) { 0.0f, -1.0f, -10.0f }, 2, 0, 2, RED };
 	Plate plate_next_stage = { (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, SKYBLUE };
 
@@ -31,6 +61,10 @@ int main(void) {
 
 	int can_draw_next_stage_plate = 0;
 
+	Model model = LoadModel("Assets/Knight.obj");
+
+	Vector3 default_rotation_axis = (Vector3){ 0.0f, 1.0f, 0.0f };
+
 	while (!WindowShouldClose()) {
 		movement.x = 0;
 		movement.y = 0;
@@ -44,15 +78,19 @@ int main(void) {
 		if (IsKeyPressed(KEY_UP)) {
 			player.pos.z--;
 			movement.z = -1;
+			player.rotation_angle = -90.0f;
 		} else if (IsKeyPressed(KEY_LEFT)) {
 			player.pos.x--;
 			movement.x = -1;
+			player.rotation_angle = 0.0f;
 		} else if (IsKeyPressed(KEY_RIGHT)) {
 			player.pos.x++;
 			movement.x = 1;
+			player.rotation_angle = 180.0f;
 		} else if (IsKeyPressed(KEY_DOWN)) {
 			player.pos.z++;
 			movement.z = 1;
+			player.rotation_angle = 90.0f;
 		}
 
 		// Collision check
@@ -90,18 +128,19 @@ int main(void) {
 		// Drawing
 		BeginDrawing();
 
-		ClearBackground(WHITE);
+		ClearBackground(GRAY);
 
 		BeginMode3D(camera);
 
-		DrawCube(player.pos, player.width, player.height, player.length, player.color);
 		DrawCube(interaction_cube.pos, interaction_cube.width, interaction_cube.height, interaction_cube.length, interaction_cube.color);
 		DrawCube(plate.pos, plate.width, plate.height, plate.length, plate.color);
 
+		DrawModelEx(model, player.pos, default_rotation_axis, player.rotation_angle, (Vector3) { 0.1f, 0.1f, 0.1f }, player.color);
 		DrawCubeWires(player.pos, player.width, player.height, player.length, player.color);
+
 		DrawCubeWires(interaction_cube.pos, interaction_cube.width, interaction_cube.height, interaction_cube.length, interaction_cube.color);
 
-		DrawGrid(100, 5.0f);
+		DrawGrid(1000, 5.0f);
 
 		if (can_draw_next_stage_plate) {
 			DrawCube(plate_next_stage.pos, plate_next_stage.width, plate_next_stage.height, plate_next_stage.length, plate_next_stage.color);;
@@ -110,7 +149,7 @@ int main(void) {
 		EndMode3D();
 		
 		if (player.pos.x == plate_next_stage.pos.x && player.pos.z == plate_next_stage.pos.z && can_draw_next_stage_plate) {
-			DrawText("NICE CAULK!!1", (WIDTH / 2) - 150, HEIGHT / 2, 48, GREEN);
+			DrawText("NICE CAULK!!1", (WIDTH / 2) - 150, HEIGHT / 2, 48, BLACK);
 		}
 
 		EndDrawing();

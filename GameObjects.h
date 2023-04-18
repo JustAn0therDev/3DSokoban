@@ -17,6 +17,8 @@ typedef struct {
 	float length;
 	Color color;
 	CubeFaces cube_faces;
+	Vector3 scale;
+	float rotation_angle;
 } Cube;
 
 typedef struct {
