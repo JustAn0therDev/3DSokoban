@@ -44,6 +44,7 @@ void UpdateScene(FirstStageScene* scene) {
 	UpdatePlayer(scene->player);
 	UpdateSokobanCamera(scene->camera, scene->player);
 
+
 	if (collision_AABB(scene->player->collision_cube, scene->interaction_cube)) {
 		scene->interaction_cube.pos = 
 			Vector3Add(scene->interaction_cube.pos, scene->player->last_movement);
@@ -134,6 +135,7 @@ void UpdateScene(FirstStageScene* scene) {
 			HEIGHT / 2,
 			48,
 			GREEN);
+		scene->finished_stage = 1;
 	}
 
 	EndDrawing();

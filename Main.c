@@ -22,6 +22,10 @@ int main(void) {
 
 	while (!WindowShouldClose()) {
 		UpdateScene(first_stage_scene);
+
+		if (first_stage_scene->finished_stage) {
+			break;
+		}
 	}
 
 	FreeScene(first_stage_scene);

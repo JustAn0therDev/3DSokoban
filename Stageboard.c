@@ -1,6 +1,7 @@
 #include "Stageboard.h"
 #include <raylib.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 Stageboard* GetStageboard() {
 	Stageboard* stageboard = malloc(sizeof(Stageboard));

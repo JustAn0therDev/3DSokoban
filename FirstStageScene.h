@@ -12,6 +12,7 @@ typedef struct first_stage_scene {
 	Plate plate;
 	Plate plate_next_stage;
 	int can_draw_next_stage_plate;
+	int finished_stage;
 	Vector3 default_rotation_axis; // TODO: I'm not sure what to do with this...
 } FirstStageScene;
 
