@@ -134,14 +134,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameMath.c" />
-    <ClCompile Include="GameMath.h" />
+    <ClCompile Include="Camera.c" />
+    <ClCompile Include="FirstStageScene.c" />
+    <ClCompile Include="Player.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Physics.c" />
+    <ClCompile Include="Stageboard.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObjects.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="FirstStageScene.h" />
+    <ClInclude Include="Macros.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="GameGeometry.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Stageboard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
