@@ -16,6 +16,6 @@ typedef struct first_stage_scene {
 	Vector3 default_rotation_axis; // TODO: I'm not sure what to do with this...
 } FirstStageScene;
 
-FirstStageScene* CreateScene();
-void UpdateScene(FirstStageScene* scene);
-void FreeScene(FirstStageScene* scene);
+FirstStageScene* CreateFirstStageScene();
+void UpdateFirstStageScene(FirstStageScene* scene);
+void FreeFirstStageScene(FirstStageScene* scene);

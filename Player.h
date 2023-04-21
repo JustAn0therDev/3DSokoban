@@ -10,7 +10,7 @@ typedef struct player {
 	Cube collision_cube;
 	float movement_speed;
 	Vector3 last_movement;
-	Texture* texture;
+	Texture* texture_ptr;
 } Player;
 
 Player* InitializePlayer();

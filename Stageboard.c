@@ -27,7 +27,10 @@ void FreeStageboard(Stageboard* stageboard) {
 		return;
 	}
 
-	UnloadTexture(*stageboard->texture_ptr);
+	if (stageboard->texture_ptr != 0) {
+		UnloadTexture(*stageboard->texture_ptr);
+	}
+	
 	UnloadModel(stageboard->model);
 
 	free(stageboard);

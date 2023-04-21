@@ -10,7 +10,7 @@
 #include "Stageboard.h"
 #include "Physics.h"
 
-FirstStageScene* CreateScene() {
+FirstStageScene* CreateFirstStageScene() {
 	FirstStageScene* scene = malloc(sizeof(FirstStageScene));
 
 	if (scene == 0) {
@@ -34,13 +34,14 @@ FirstStageScene* CreateScene() {
 	scene->plate = (Plate){ (Vector3) { 0.0f, -1.0f, -5.0f }, 2, 0, 2, RED };
 	scene->plate_next_stage = (Plate){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, PINK };
 	scene->can_draw_next_stage_plate = 0;
+	scene->finished_stage = 0;
 	scene->default_rotation_axis = (Vector3){ 0.0f, 1.0f, 0.0f };
 	scene->stageboard = GetStageboard();
 
 	return scene;
 }
 
-void UpdateScene(FirstStageScene* scene) {
+void UpdateFirstStageScene(FirstStageScene* scene) {
 	UpdatePlayer(scene->player);
 	UpdateSokobanCamera(scene->camera, scene->player);
 
@@ -141,7 +142,7 @@ void UpdateScene(FirstStageScene* scene) {
 	EndDrawing();
 }
 
-void FreeScene(FirstStageScene* scene) {
+void FreeFirstStageScene(FirstStageScene* scene) {
 	FreePlayer(scene->player);
 	FreeStageboard(scene->stageboard);
 	free(scene->camera);

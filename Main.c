@@ -18,17 +18,45 @@ int main(void) {
 	
 	SetTargetFPS(60);
 
-	FirstStageScene* first_stage_scene = CreateScene();
+	int chosen_scene = 0;
+
+	FirstStageScene* first_stage_scene = CreateFirstStageScene();
+
+	Image image = LoadImage("Assets/Images/SinCity.png");
+	Texture texture = LoadTextureFromImage(image);
+
+	int break_game_loop = 0;
 
 	while (!WindowShouldClose()) {
-		UpdateScene(first_stage_scene);
+		switch (chosen_scene)
+		{
+		case 0:
+			BeginDrawing();
+			
+			DrawTexture(texture, WIDTH / 4, HEIGHT / 4, WHITE);
+			
+			EndDrawing();
 
-		if (first_stage_scene->finished_stage) {
+			if (IsKeyPressed(KEY_ENTER)) {
+				chosen_scene = 1;
+			}
+			break;
+		case 1:
+			UpdateFirstStageScene(first_stage_scene);
+
+			if (first_stage_scene->finished_stage) {
+				FreeFirstStageScene(first_stage_scene);
+				chosen_scene = -1;
+				break_game_loop = 1;
+			}
+		default:
+			break;
+		}
+
+		if (break_game_loop) {
 			break;
 		}
 	}
-
-	FreeScene(first_stage_scene);
 
 	return 0;
 }

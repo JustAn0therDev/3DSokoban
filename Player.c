@@ -17,7 +17,7 @@ Player* InitializePlayer() {
 	player->rotation_angle = 0.0f;
 	player->movement_speed = 1;
 	player->model = LoadModel("Assets/Models/Knight.obj");
-	player->texture = 0;
+	player->texture_ptr = 0;
 	player->last_movement = (Vector3){ 0 };
 
 	player->collision_cube = (Cube){
@@ -62,10 +62,6 @@ void UpdatePlayer(Player* player) {
 void FreePlayer(Player* player) {
 	if (player == 0) {
 		return;
-	}
-
-	if (player->texture != 0) {
-		UnloadTexture(*player->texture);
 	}
 
 	UnloadModel(player->model);
