@@ -35,7 +35,7 @@ int main(void) {
 
 	Cube interaction_cube = { 
 		(Vector3) { 
-			0.0f, 0.0f, -5.0f 
+			3.0f, 0.0f, 0.0f 
 		},
 		2.0f, 
 		2.0f, 
@@ -64,7 +64,7 @@ int main(void) {
 		0.0f
 	};
 	
-	Plate plate = { (Vector3) { 0.0f, -1.0f, -10.0f }, 2, 0, 2, RED };
+	Plate plate = { (Vector3) { 0.0f, -1.0f, -5.0f }, 2, 0, 2, RED };
 	Plate plate_next_stage = { (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, PINK };
 
 	Camera camera = { 0 };
