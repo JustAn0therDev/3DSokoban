@@ -12,12 +12,17 @@ Stageboard* GetStageboard() {
 	}
 
 	stageboard->pos = (Vector3){ -1.0f, -2.0f, 0.0f };
+	stageboard->scale = (Vector3){ 0.15f, 0.1f, 0.15f };
 	stageboard->height = 2.0f;
 	stageboard->width = 2.0f;
 	stageboard->length = 2.0f;
 	stageboard->model = LoadModel("Assets/Models/Board.obj");
-	stageboard->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture = LoadTexture("Assets/Textures/Chess_Board.png");
-	stageboard->texture_ptr = &stageboard->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture;
+	
+	stageboard->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture = 
+		LoadTexture("Assets/Textures/Chess_Board.png");
+	
+	stageboard->texture_ptr = 
+		&stageboard->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture;
 
 	return stageboard;
 }

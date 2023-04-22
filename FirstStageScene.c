@@ -20,8 +20,8 @@ FirstStageScene* CreateFirstStageScene() {
 
 	scene->player = InitializePlayer();
 	scene->camera = GetCamera();
-	
-	scene->interaction_cube = (Cube) {
+
+	scene->interaction_cube = (Cube){
 		(Vector3) {
 			3.0f, 0.0f, 0.0f
 		},
@@ -31,11 +31,10 @@ FirstStageScene* CreateFirstStageScene() {
 		RED
 	};
 
-	scene->plate = (Plate){ (Vector3) { 0.0f, -1.0f, -5.0f }, 2, 0, 2, RED };
-	scene->plate_next_stage = (Plate){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, PINK };
+	scene->plate = (Cube){ (Vector3) { 0.0f, 0.0f, -4.0f }, 2, 0, 2, RED };
+	scene->plate_next_stage = (Cube){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, (Color) { 0, 255, 0, 0 } };
 	scene->can_draw_next_stage_plate = 0;
 	scene->finished_stage = 0;
-	scene->default_rotation_axis = (Vector3){ 0.0f, 1.0f, 0.0f };
 	scene->stageboard = GetStageboard();
 
 	return scene;
@@ -45,14 +44,12 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 	UpdatePlayer(scene->player);
 	UpdateSokobanCamera(scene->camera, scene->player);
 
-
 	if (collision_AABB(scene->player->collision_cube, scene->interaction_cube)) {
-		scene->interaction_cube.pos = 
+		scene->interaction_cube.pos =
 			Vector3Add(scene->interaction_cube.pos, scene->player->last_movement);
 	}
 
-	if (scene->interaction_cube.pos.z == scene->plate.pos.z &&
-		scene->interaction_cube.pos.x == scene->plate.pos.x) {
+	if (collision_AABB(scene->interaction_cube, scene->plate)) {
 		scene->plate.color = GREEN;
 		scene->interaction_cube.color = GREEN;
 		scene->can_draw_next_stage_plate = 1;
@@ -66,7 +63,7 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 	// Drawing
 	BeginDrawing();
 
-	ClearBackground(DARKGRAY);
+	ClearBackground(SKYBLUE);
 
 	BeginMode3D(*scene->camera);
 
@@ -87,7 +84,7 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 	DrawModelEx(
 		scene->player->model,
 		scene->player->pos,
-		scene->default_rotation_axis,
+		scene->player->rotation_axis,
 		scene->player->rotation_angle,
 		scene->player->scale,
 		WHITE);
@@ -95,11 +92,9 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 	DrawModelEx(
 		scene->stageboard->model,
 		scene->stageboard->pos,
-		scene->default_rotation_axis,
+		(Vector3){0.0f, 0.0f, 0.0f},
 		0,
-		(Vector3) {
-		0.15f, 0.1f, 0.15f
-	},
+		scene->stageboard->scale,
 		WHITE);
 
 	DrawCubeWires(
@@ -117,12 +112,16 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 		scene->interaction_cube.color);
 
 	if (scene->can_draw_next_stage_plate) {
+		scene->plate_next_stage.color.a = Lerp(scene->plate_next_stage.color.a, 255, 0.1f);
 		DrawCube(
 			scene->plate_next_stage.pos,
 			scene->plate_next_stage.width,
 			scene->plate_next_stage.height,
 			scene->plate_next_stage.length,
 			scene->plate_next_stage.color);
+	}
+	else {
+		scene->plate_next_stage.color.a = 0;
 	}
 
 	EndMode3D();

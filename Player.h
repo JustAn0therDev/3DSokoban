@@ -11,6 +11,7 @@ typedef struct player {
 	float movement_speed;
 	Vector3 last_movement;
 	Texture* texture_ptr;
+	Vector3 rotation_axis;
 } Player;
 
 Player* InitializePlayer();

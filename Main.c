@@ -22,8 +22,8 @@ int main(void) {
 
 	FirstStageScene* first_stage_scene = CreateFirstStageScene();
 
-	Image image = LoadImage("Assets/Images/SinCity.png");
-	Texture texture = LoadTextureFromImage(image);
+	Image image_sin_city = LoadImage("Assets/Images/SinCity.png");
+	Texture texture_sin_city = LoadTextureFromImage(image_sin_city);
 
 	int break_game_loop = 0;
 
@@ -33,7 +33,7 @@ int main(void) {
 		case 0:
 			BeginDrawing();
 			
-			DrawTexture(texture, WIDTH / 4, HEIGHT / 4, WHITE);
+			DrawTexture(texture_sin_city, WIDTH / 4, HEIGHT / 4, WHITE);
 			
 			EndDrawing();
 
@@ -46,8 +46,14 @@ int main(void) {
 
 			if (first_stage_scene->finished_stage) {
 				FreeFirstStageScene(first_stage_scene);
+				// TODO: Maybe wait a few seconds before moving on?
 				chosen_scene = -1;
 				break_game_loop = 1;
+			}
+
+			if (IsKeyPressed(KEY_R)) {
+				FreeFirstStageScene(first_stage_scene);
+				first_stage_scene = CreateFirstStageScene();
 			}
 		default:
 			break;
@@ -57,6 +63,9 @@ int main(void) {
 			break;
 		}
 	}
+
+	UnloadTexture(texture_sin_city);
+	UnloadImage(image_sin_city);
 
 	return 0;
 }

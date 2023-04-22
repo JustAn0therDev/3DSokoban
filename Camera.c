@@ -23,22 +23,17 @@ Camera* GetCamera() {
 }
 
 void UpdateSokobanCamera(Camera* camera, Player* player) {
-	if (camera->position.z != 10.0f &&
-		camera->position.y != 10.0f) {
-		camera->position.z = Lerp(
-			camera->position.z, 
-			10.0f, 
-			0.1f);
+	camera->position.z = Lerp(
+		camera->position.z, 
+		10.0f, 
+		0.1f);
 
-		camera->position.y = Lerp(
-			camera->position.y,
-			10.0f,
-			0.1f);
-
-		return;
-	}
+	camera->position.y = Lerp(
+		camera->position.y,
+		10.0f,
+		0.1f);
 	
-	camera->target.x = Lerp(camera->target.x, player->pos.x / 2, 0.5f);
-	camera->target.y = Lerp(camera->target.y, player->pos.y / 2, 0.5f);
-	camera->target.z = Lerp(camera->target.z, player->pos.z / 2, 0.5f);
+	camera->target.x = Lerp(camera->target.x, player->pos.x / 2, 0.1f);
+	camera->target.y = Lerp(camera->target.y, player->pos.y / 2, 0.1f);
+	camera->target.z = Lerp(camera->target.z, player->pos.z / 2, 0.1f);
 }

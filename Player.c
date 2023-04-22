@@ -14,6 +14,7 @@ Player* InitializePlayer() {
 
 	player->pos = (Vector3){ 0 };
 	player->scale = (Vector3){ 0.1f, 0.1f, 0.1f };
+	player->rotation_axis = (Vector3){ 0.0f, 1.0f, 0.0f };
 	player->rotation_angle = 0.0f;
 	player->movement_speed = 1;
 	player->model = LoadModel("Assets/Models/Knight.obj");
