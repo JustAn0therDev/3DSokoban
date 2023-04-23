@@ -10,11 +10,12 @@ typedef struct first_stage_scene {
 	Stageboard* stageboard;
 	Camera* camera;
 	Cube plate;
-	Cube plate_next_stage;
+	Cube next_stage_plate;
 	int can_draw_next_stage_plate;
 	int finished_stage;
 } FirstStageScene;
 
 FirstStageScene* CreateFirstStageScene();
 void UpdateFirstStageScene(FirstStageScene* scene);
+void ResetFirstStageScene(FirstStageScene* scene);
 void FreeFirstStageScene(FirstStageScene* scene);

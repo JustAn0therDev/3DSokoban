@@ -14,7 +14,7 @@ FirstStageScene* CreateFirstStageScene() {
 	FirstStageScene* scene = malloc(sizeof(FirstStageScene));
 
 	if (scene == 0) {
-		printf("Unable to allocate memory for scene.\n");
+		printf("Unable to allocate memory for first scene object.\n");
 		exit(1);
 	}
 
@@ -31,8 +31,8 @@ FirstStageScene* CreateFirstStageScene() {
 		RED
 	};
 
-	scene->plate = (Cube){ (Vector3) { 0.0f, 0.0f, -4.0f }, 2, 0, 2, RED };
-	scene->plate_next_stage = (Cube){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, (Color) { 0, 255, 0, 0 } };
+	scene->plate = (Cube){ (Vector3) { 0.0f, 0.0f, -4.0f }, 3, 0, 3, RED };
+	scene->next_stage_plate = (Cube){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, (Color) { 0, 255, 0, 0 } };
 	scene->can_draw_next_stage_plate = 0;
 	scene->finished_stage = 0;
 	scene->stageboard = GetStageboard();
@@ -92,7 +92,7 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 	DrawModelEx(
 		scene->stageboard->model,
 		scene->stageboard->pos,
-		(Vector3){0.0f, 0.0f, 0.0f},
+		(Vector3){ 0.0f, 0.0f, 0.0f },
 		0,
 		scene->stageboard->scale,
 		WHITE);
@@ -112,33 +112,59 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 		scene->interaction_cube.color);
 
 	if (scene->can_draw_next_stage_plate) {
-		scene->plate_next_stage.color.a = Lerp(scene->plate_next_stage.color.a, 255, 0.1f);
+		scene->next_stage_plate.color.a = 
+			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.2f);
+		
 		DrawCube(
-			scene->plate_next_stage.pos,
-			scene->plate_next_stage.width,
-			scene->plate_next_stage.height,
-			scene->plate_next_stage.length,
-			scene->plate_next_stage.color);
+			scene->next_stage_plate.pos,
+			scene->next_stage_plate.width,
+			scene->next_stage_plate.height,
+			scene->next_stage_plate.length,
+			scene->next_stage_plate.color);
 	}
 	else {
-		scene->plate_next_stage.color.a = 0;
+		scene->next_stage_plate.color.a = 0;
 	}
 
 	EndMode3D();
 
-	if (scene->player->pos.x == scene->plate_next_stage.pos.x &&
-		scene->player->pos.z == scene->plate_next_stage.pos.z &&
+	if (scene->player->pos.x == scene->next_stage_plate.pos.x &&
+		scene->player->pos.z == scene->next_stage_plate.pos.z &&
 		scene->can_draw_next_stage_plate) {
 		DrawText(
-			"NICE CAULK!!1",
+			"NICE CAULK!!",
 			(WIDTH / 2) - 150,
 			HEIGHT / 2,
 			48,
-			GREEN);
+			BLACK);
+		
 		scene->finished_stage = 1;
 	}
 
 	EndDrawing();
+}
+
+void ResetFirstStageScene(FirstStageScene* scene) {
+	FreePlayer(scene->player);
+	free(scene->camera);
+
+	scene->player = InitializePlayer();
+	scene->camera = GetCamera();
+
+	scene->interaction_cube = (Cube){
+		(Vector3) {
+			3.0f, 0.0f, 0.0f
+		},
+		2.0f,
+		2.0f,
+		2.0f,
+		RED
+	};
+
+	scene->plate = (Cube){ (Vector3) { 0.0f, 0.0f, -4.0f }, 3, 0, 3, RED };
+	scene->next_stage_plate = (Cube){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, (Color) { 0, 255, 0, 0 } };
+	scene->can_draw_next_stage_plate = 0;
+	scene->finished_stage = 0;
 }
 
 void FreeFirstStageScene(FirstStageScene* scene) {

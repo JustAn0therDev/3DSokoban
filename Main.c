@@ -33,7 +33,7 @@ int main(void) {
 		case 0:
 			BeginDrawing();
 			
-			DrawTexture(texture_sin_city, WIDTH / 4, HEIGHT / 4, WHITE);
+			DrawTexture(texture_sin_city, WIDTH / 4, HEIGHT / 5, WHITE);
 			
 			EndDrawing();
 
@@ -52,8 +52,7 @@ int main(void) {
 			}
 
 			if (IsKeyPressed(KEY_R)) {
-				FreeFirstStageScene(first_stage_scene);
-				first_stage_scene = CreateFirstStageScene();
+				ResetFirstStageScene(first_stage_scene);
 			}
 		default:
 			break;
