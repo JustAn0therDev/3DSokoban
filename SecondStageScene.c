@@ -23,7 +23,7 @@ SecondStageScene* CreateSecondStageScene() {
 
 	scene->interaction_cubes[0] = (Cube){
 		(Vector3) {
-			3.0f, 0.0f, -3.0f
+			3.0f, 0.0f, 0.0f
 		},
 		2.0f,
 		2.0f,
@@ -34,7 +34,7 @@ SecondStageScene* CreateSecondStageScene() {
 
 	scene->interaction_cubes[1] = (Cube){
 		(Vector3) {
-			9.0f, 0.0f, -3.0f
+			-6.0f, 0.0f, 0.0f
 		},
 		2.0f,
 		2.0f,
@@ -44,8 +44,8 @@ SecondStageScene* CreateSecondStageScene() {
 	};
 
 	scene->plates_amount = 2;
-	scene->plates[0] = (Cube){ (Vector3) { 0.0f, -1.0f, -6.0f }, 3, 0, 3, RED, 0 };
-	scene->plates[1] = (Cube){ (Vector3) { -10.0f, -1.0f, -6.0f }, 3, 0, 3, RED, 0 };
+	scene->plates[0] = (Cube){ (Vector3) { 3.0f, -1.0f, -6.0f }, 3, 0, 3, RED, 0 };
+	scene->plates[1] = (Cube){ (Vector3) { -6.0f, -1.0f, -6.0f }, 3, 0, 3, RED, 0 };
 
 	scene->next_stage_plate = (Cube){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, (Color) { 0, 255, 0, 0 } };
 	scene->can_draw_next_stage_plate = 0;
@@ -72,7 +72,7 @@ void UpdateSecondStageScene(SecondStageScene* scene) {
 
 		// Checking plates
 		for (int j = 0; j < scene->plates_amount; j++) {
-			if (collision_AABB_margin(scene->plates[i], scene->interaction_cubes[j])) {
+			if (plate_collision(scene->plates[i], scene->interaction_cubes[j])) {
 				activated_plate = 1;
 				scene->plates[i].color = GREEN;
 			}

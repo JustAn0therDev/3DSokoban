@@ -23,7 +23,7 @@ int collision_AABB(Cube cube1, Cube cube2) {
 	return x_collision & y_collision & z_collision;
 }
 
-int collision_AABB_margin(Cube cube1, Cube cube2) {
+int plate_collision(Cube cube1, Cube cube2) {
 	float cube1top = cube1.pos.y + cube1.height / 2;
 	float cube1bottom = cube1.pos.y - cube1.height / 2;
 	float cube1front = cube1.pos.z + cube1.length / 2;

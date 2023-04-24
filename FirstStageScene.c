@@ -28,10 +28,10 @@ FirstStageScene* CreateFirstStageScene() {
 		2.0f,
 		2.0f,
 		2.0f,
-		RED
+		BLACK
 	};
 
-	scene->plate = (Cube){ (Vector3) { 0.0f, 0.0f, -4.0f }, 3, 0, 3, RED };
+	scene->plate = (Cube){ (Vector3) { 0.0f, -1.0f, -4.0f }, 3, 0, 3, RED };
 	scene->next_stage_plate = (Cube){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, (Color) { 0, 255, 0, 0 } };
 	scene->can_draw_next_stage_plate = 0;
 	scene->finished_stage = 0;
@@ -49,14 +49,12 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 			Vector3Add(scene->interaction_cube.pos, scene->player->last_movement);
 	}
 
-	if (collision_AABB(scene->interaction_cube, scene->plate)) {
+	if (plate_collision(scene->interaction_cube, scene->plate)) {
 		scene->plate.color = GREEN;
-		scene->interaction_cube.color = GREEN;
 		scene->can_draw_next_stage_plate = 1;
 	}
 	else {
 		scene->plate.color = RED;
-		scene->interaction_cube.color = RED;
 		scene->can_draw_next_stage_plate = 0;
 	}
 
