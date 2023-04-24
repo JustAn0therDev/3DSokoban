@@ -11,5 +11,5 @@ typedef struct stageboard {
 	float height;
 } Stageboard;
 
-Stageboard* GetStageboard();
+Stageboard* CreateStageboard();
 void FreeStageboard(Stageboard* stageboard);

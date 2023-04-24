@@ -52,7 +52,7 @@ int main(void) {
 			}
 
 			if (IsKeyPressed(KEY_R)) {
-				ResetFirstStageScene(first_stage_scene);
+				first_stage_scene = ResetFirstStageScene(first_stage_scene);
 			}
 		default:
 			break;

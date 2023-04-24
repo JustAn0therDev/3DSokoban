@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-Stageboard* GetStageboard() {
+Stageboard* CreateStageboard() {
 	Stageboard* stageboard = malloc(sizeof(Stageboard));
 
 	if (stageboard == 0) {

@@ -17,5 +17,5 @@ typedef struct first_stage_scene {
 
 FirstStageScene* CreateFirstStageScene();
 void UpdateFirstStageScene(FirstStageScene* scene);
-void ResetFirstStageScene(FirstStageScene* scene);
+FirstStageScene* ResetFirstStageScene(FirstStageScene* scene);
 void FreeFirstStageScene(FirstStageScene* scene);

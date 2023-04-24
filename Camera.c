@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "Player.h"
 
-Camera* GetCamera() {
+Camera* CreateCamera() {
 	Camera* camera = malloc(sizeof(Camera));
 
 	if (camera == 0) {
@@ -22,7 +22,7 @@ Camera* GetCamera() {
 	return camera;
 }
 
-void UpdateSokobanCamera(Camera* camera, Player* player) {
+void CustomUpdateCamera(Camera* camera, Player* player) {
 	camera->position.z = Lerp(
 		camera->position.z, 
 		10.0f, 

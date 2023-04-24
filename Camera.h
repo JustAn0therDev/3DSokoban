@@ -2,5 +2,5 @@
 #include <raylib.h>
 #include "Player.h"
 
-Camera* GetCamera();
-void UpdateSokobanCamera(Camera* camera, Player* player);
+Camera* CreateCamera();
+void CustomUpdateCamera(Camera* camera, Player* player);
