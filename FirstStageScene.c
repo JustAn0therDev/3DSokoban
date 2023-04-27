@@ -59,8 +59,6 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 	}
 
 	// Drawing
-	// NOTES(Ruan): Should the drawing be inside the update function of a game object, 
-	// or should it be here?
 	BeginDrawing();
 
 	ClearBackground(SKYBLUE);
@@ -131,13 +129,6 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 	if (scene->player->pos.x == scene->next_stage_plate.pos.x &&
 		scene->player->pos.z == scene->next_stage_plate.pos.z &&
 		scene->can_draw_next_stage_plate) {
-		DrawText(
-			"NICE CAULK!!",
-			(WIDTH / 2) - 150,
-			HEIGHT / 2,
-			48,
-			BLACK);
-		
 		scene->finished_stage = 1;
 	}
 

@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "FirstStageScene.h"
 #include "SecondStageScene.h"
+#include "ThirdStageScene.h"
 
 #define WIDTH 1280
 #define HEIGHT 720
@@ -19,10 +20,11 @@ int main(void) {
 	
 	SetTargetFPS(60);
 
-	int chosen_scene = 0;
+	int chosen_scene = 3;
 
 	FirstStageScene* first_stage_scene = 0;
 	SecondStageScene* second_stage_scene = 0;
+	ThirdStageScene* third_stage_scene = 0;
 
 	Image image_sin_city = LoadImage("Assets/Images/SinCity.png");
 	Texture texture_sin_city = LoadTextureFromImage(image_sin_city);
@@ -41,15 +43,17 @@ int main(void) {
 
 			if (IsKeyPressed(KEY_ENTER)) {
 				chosen_scene = 1; // TODO: choosing the second scene temporarily; this should be set to 1.
-				first_stage_scene = CreateFirstStageScene();
 			}
 			break;
 		case 1:
+			if (first_stage_scene == 0) {
+				first_stage_scene = CreateFirstStageScene();
+			}
+
 			UpdateFirstStageScene(first_stage_scene);
 
 			if (first_stage_scene->finished_stage) {
 				FreeFirstStageScene(first_stage_scene);
-				second_stage_scene = CreateSecondStageScene();
 				chosen_scene++;
 			}
 
@@ -58,17 +62,36 @@ int main(void) {
 			}
 			break;
 		case 2:
+			if (second_stage_scene == 0) {
+				second_stage_scene = CreateSecondStageScene();
+			}
+
 			UpdateSecondStageScene(second_stage_scene);
 
 			if (second_stage_scene->finished_stage) {
 				FreeSecondStageScene(second_stage_scene);
-				// TODO: Maybe wait a few seconds before moving on?
+				chosen_scene++;
+			}
+
+			if (IsKeyPressed(KEY_R)) {
+				second_stage_scene = ResetSecondStageScene(second_stage_scene);
+			}
+			break;
+		case 3:
+			if (third_stage_scene == 0) {
+				third_stage_scene = CreateThirdStageScene();
+			}
+
+			UpdateThirdStageScene(third_stage_scene);
+
+			if (third_stage_scene->finished_stage) {
+				FreeThirdStageScene(third_stage_scene);
 				chosen_scene = -1;
 				break_game_loop = 1;
 			}
 
 			if (IsKeyPressed(KEY_R)) {
-				second_stage_scene = ResetSecondStageScene(second_stage_scene);
+				third_stage_scene = ResetThirdStageScene(third_stage_scene);
 			}
 			break;
 		default:

@@ -141,6 +141,7 @@
     <ClCompile Include="Physics.c" />
     <ClCompile Include="SecondStageScene.c" />
     <ClCompile Include="Stageboard.c" />
+    <ClCompile Include="ThirdStageScene.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="SecondStageScene.h" />
     <ClInclude Include="Stageboard.h" />
+    <ClInclude Include="ThirdStageScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

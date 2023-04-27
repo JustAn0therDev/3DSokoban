@@ -12,7 +12,7 @@ Stageboard* CreateStageboard() {
 	}
 
 	stageboard->pos = (Vector3){ -1.0f, -2.0f, 0.0f };
-	stageboard->scale = (Vector3){ 0.9f, 0.9f, 0.9f };
+	stageboard->scale = (Vector3){ 1.5f, 1.5f, 1.5f };
 	stageboard->height = 2.0f;
 	stageboard->width = 2.0f;
 	stageboard->length = 2.0f;
