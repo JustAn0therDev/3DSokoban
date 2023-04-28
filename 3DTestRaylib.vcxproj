@@ -136,6 +136,8 @@
   <ItemGroup>
     <ClCompile Include="Camera.c" />
     <ClCompile Include="FirstStageScene.c" />
+    <ClCompile Include="FourthStageScene.c" />
+    <ClInclude Include="FourthStageScene.h" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Physics.c" />
