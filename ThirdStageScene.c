@@ -70,26 +70,18 @@ void UpdateThirdStageScene(ThirdStageScene* scene) {
 				scene->player->last_movement);
 		}
 	}
-	else if (collision_AABB(scene->player->collision_cube, scene->interaction_cubes[1])) {
+
+	if (collision_AABB(scene->player->collision_cube, scene->interaction_cubes[1])) {
 		scene->interaction_cubes[1].pos = Vector3Add(
 			scene->interaction_cubes[1].pos,
 			scene->player->last_movement);
-
-		if (scene->stacked_cubes) {
-			scene->interaction_cubes[0].pos = Vector3Add(
-				scene->interaction_cubes[0].pos,
-				scene->player->last_movement);
-		}
 	}
 
 	if (collision_AABB(scene->interaction_cubes[0], scene->interaction_cubes[1])) {
 		scene->stacked_cubes = 1;
 		scene->interaction_cubes[1].pos.y += scene->interaction_cubes[1].height;
-	}
-
-	if (scene->stacked_cubes) {
-		scene->interaction_cubes[0].pos.x = scene->interaction_cubes[1].pos.x;
-		scene->interaction_cubes[0].pos.z = scene->interaction_cubes[1].pos.z;
+		scene->interaction_cubes[1].pos.x = scene->interaction_cubes[0].pos.x;
+		scene->interaction_cubes[1].pos.z = scene->interaction_cubes[0].pos.z;
 	}
 
 	if ((plate_collision(scene->heavy_plate, scene->interaction_cubes[0]) ||
