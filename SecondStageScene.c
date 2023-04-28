@@ -28,7 +28,7 @@ SecondStageScene* CreateSecondStageScene() {
 		2.0f,
 		2.0f,
 		2.0f,
-		BLACK,
+		RED,
 		0
 	};
 
@@ -39,7 +39,7 @@ SecondStageScene* CreateSecondStageScene() {
 		2.0f,
 		2.0f,
 		2.0f,
-		BLACK,
+		RED,
 		0
 	};
 
@@ -137,7 +137,7 @@ void UpdateSecondStageScene(SecondStageScene* scene) {
 		},
 		0,
 		scene->stageboard->scale,
-		WHITE);
+		scene->stageboard->color);
 
 	DrawCubeWires(
 		scene->player->collision_cube.pos,
@@ -148,7 +148,7 @@ void UpdateSecondStageScene(SecondStageScene* scene) {
 
 	if (scene->can_draw_next_stage_plate) {
 		scene->next_stage_plate.color.a =
-			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.2f);
+			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.1f);
 
 		DrawCube(
 			scene->next_stage_plate.pos,

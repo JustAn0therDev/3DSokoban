@@ -17,9 +17,10 @@ Stageboard* CreateStageboard() {
 	stageboard->width = 2.0f;
 	stageboard->length = 2.0f;
 	stageboard->model = LoadModel("Assets/Models/Board.obj");
+	stageboard->color = DARKGRAY;
 	
 	stageboard->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture = 
-		LoadTexture("Assets/Textures/concrete-floor.png");
+		LoadTexture("Assets/Textures/stacked-stones.png");
 	
 	stageboard->texture_ptr = 
 		&stageboard->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture;
@@ -35,7 +36,7 @@ void FreeStageboard(Stageboard* stageboard) {
 	if (stageboard->texture_ptr != 0) {
 		UnloadTexture(*stageboard->texture_ptr);
 	}
-	
+
 	UnloadModel(stageboard->model);
 
 	free(stageboard);

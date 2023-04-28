@@ -6,7 +6,7 @@
 
 typedef struct third_stage_scene {
 	Player* player;
-	Cube interaction_cubes[2];
+	Cube stackable_cubes[2];
 	Stageboard* stageboard;
 	Camera* camera;
 	Cube heavy_plate;

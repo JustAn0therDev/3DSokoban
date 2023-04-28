@@ -54,13 +54,15 @@ FourthStageScene* CreateFourthStageScene() {
 		0
 	};
 
-	scene->heavy_plate = (Cube){ (Vector3) { 0.0f, -1.0f, -6.0f }, 3, 0, 3, ORANGE, 0 };
+	scene->heavy_plate = (Cube){ (Vector3) { -3.0f, -1.0f, -6.0f }, 3, 0, 3, DARKBROWN, 0 };
 	scene->normal_plate = (Cube){ (Vector3) { 3.0f, -1.0f, -6.0f }, 3, 0, 3, RED, 0 };
 
 	scene->next_stage_plate = (Cube){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, (Color) { 0, 255, 0, 0 } };
 	scene->can_draw_next_stage_plate = 0;
 	scene->finished_stage = 0;
 	scene->stacked_cubes = 0;
+	scene->activated_heavy_plate = 0;
+	scene->activated_normal_plate = 0;
 	scene->stageboard = CreateStageboard();
 
 	return scene;
@@ -96,29 +98,40 @@ void UpdateFourthStageScene(FourthStageScene* scene) {
 		scene->stackable_cubes[1].pos.z = scene->stackable_cubes[0].pos.z;
 	}
 
-	if (((plate_collision(scene->heavy_plate, scene->stackable_cubes[0]) ||
-		plate_collision(scene->heavy_plate, scene->stackable_cubes[1])) &&
-		scene->stacked_cubes) &&
-		plate_collision(scene->normal_plate, scene->interaction_cube)) {
-		scene->can_draw_next_stage_plate = 1;
-		scene->heavy_plate.color = GREEN;
-	}
-	else {
-		scene->can_draw_next_stage_plate = 0;
-	}
-
-	if (plate_collision(scene->normal_plate, scene->interaction_cube)) {
-		scene->normal_plate.color = GREEN;
-	}
-	else {
-		scene->normal_plate.color = RED;
-	}
-
 	// Checking interactable cubes.
 	if (collision_AABB(scene->player->collision_cube, scene->interaction_cube)) {
 		scene->interaction_cube.pos = Vector3Add(
 			scene->interaction_cube.pos,
 			scene->player->last_movement);
+	}
+
+	// Checking plate activation
+	if (((plate_collision(scene->heavy_plate, scene->stackable_cubes[0]) ||
+		plate_collision(scene->heavy_plate, scene->stackable_cubes[1])) &&
+		scene->stacked_cubes)) {
+		scene->activated_heavy_plate = 1;
+		scene->heavy_plate.color = GREEN;
+	}
+	else {
+		scene->activated_heavy_plate = 0;
+		scene->heavy_plate.color = DARKBROWN;
+	}
+
+	if (plate_collision(scene->normal_plate, scene->interaction_cube)) {
+		scene->normal_plate.color = GREEN;
+		scene->activated_normal_plate = 1;
+	}
+	else {
+		scene->normal_plate.color = RED;
+		scene->activated_normal_plate = 0;
+	}
+
+	if (scene->activated_heavy_plate & scene->activated_normal_plate) {
+		scene->can_draw_next_stage_plate = 1;
+		scene->heavy_plate.color = GREEN;
+	}
+	else {
+		scene->can_draw_next_stage_plate = 0;
 	}
 
 	// Drawing
@@ -188,7 +201,7 @@ void UpdateFourthStageScene(FourthStageScene* scene) {
 		},
 		0,
 		scene->stageboard->scale,
-		WHITE);
+		scene->stageboard->color);
 
 	DrawCubeWires(
 		scene->player->collision_cube.pos,
@@ -199,7 +212,7 @@ void UpdateFourthStageScene(FourthStageScene* scene) {
 
 	if (scene->can_draw_next_stage_plate) {
 		scene->next_stage_plate.color.a =
-			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.2f);
+			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.1f);
 
 		DrawCube(
 			scene->next_stage_plate.pos,

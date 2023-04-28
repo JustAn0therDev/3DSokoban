@@ -21,7 +21,7 @@ ThirdStageScene* CreateThirdStageScene() {
 	scene->player = InitializePlayer();
 	scene->camera = CreateCamera();
 
-	scene->interaction_cubes[0] = (Cube){
+	scene->stackable_cubes[0] = (Cube){
 		(Vector3) {
 			3.0f, 0.0f, 0.0f
 		},
@@ -32,7 +32,7 @@ ThirdStageScene* CreateThirdStageScene() {
 		0
 	};
 
-	scene->interaction_cubes[1] = (Cube){
+	scene->stackable_cubes[1] = (Cube){
 		(Vector3) {
 			-6.0f, 0.0f, 0.0f
 		},
@@ -59,33 +59,33 @@ void UpdateThirdStageScene(ThirdStageScene* scene) {
 	CustomUpdateCamera(scene->camera, scene->player);
 
 	// Checking interaction cubes.
-	if (collision_AABB(scene->player->collision_cube, scene->interaction_cubes[0])) {
-		scene->interaction_cubes[0].pos = Vector3Add(
-			scene->interaction_cubes[0].pos,
+	if (collision_AABB(scene->player->collision_cube, scene->stackable_cubes[0])) {
+		scene->stackable_cubes[0].pos = Vector3Add(
+			scene->stackable_cubes[0].pos,
 			scene->player->last_movement);
 
 		if (scene->stacked_cubes) {
-			scene->interaction_cubes[1].pos = Vector3Add(
-				scene->interaction_cubes[1].pos,
+			scene->stackable_cubes[1].pos = Vector3Add(
+				scene->stackable_cubes[1].pos,
 				scene->player->last_movement);
 		}
 	}
 
-	if (collision_AABB(scene->player->collision_cube, scene->interaction_cubes[1])) {
-		scene->interaction_cubes[1].pos = Vector3Add(
-			scene->interaction_cubes[1].pos,
+	if (collision_AABB(scene->player->collision_cube, scene->stackable_cubes[1])) {
+		scene->stackable_cubes[1].pos = Vector3Add(
+			scene->stackable_cubes[1].pos,
 			scene->player->last_movement);
 	}
 
-	if (collision_AABB(scene->interaction_cubes[0], scene->interaction_cubes[1])) {
+	if (collision_AABB(scene->stackable_cubes[0], scene->stackable_cubes[1])) {
 		scene->stacked_cubes = 1;
-		scene->interaction_cubes[1].pos.y += scene->interaction_cubes[1].height;
-		scene->interaction_cubes[1].pos.x = scene->interaction_cubes[0].pos.x;
-		scene->interaction_cubes[1].pos.z = scene->interaction_cubes[0].pos.z;
+		scene->stackable_cubes[1].pos.y += scene->stackable_cubes[1].height;
+		scene->stackable_cubes[1].pos.x = scene->stackable_cubes[0].pos.x;
+		scene->stackable_cubes[1].pos.z = scene->stackable_cubes[0].pos.z;
 	}
 
-	if ((plate_collision(scene->heavy_plate, scene->interaction_cubes[0]) ||
-		plate_collision(scene->heavy_plate, scene->interaction_cubes[1])) &&
+	if ((plate_collision(scene->heavy_plate, scene->stackable_cubes[0]) ||
+		plate_collision(scene->heavy_plate, scene->stackable_cubes[1])) &&
 		scene->stacked_cubes) {
 		scene->can_draw_next_stage_plate = 1; 
 		scene->heavy_plate.color = GREEN;
@@ -103,18 +103,18 @@ void UpdateThirdStageScene(ThirdStageScene* scene) {
 
 	for (int i = 0; i < 2; i++) {
 		DrawCube(
-			scene->interaction_cubes[i].pos,
-			scene->interaction_cubes[i].width,
-			scene->interaction_cubes[i].height,
-			scene->interaction_cubes[i].length,
-			scene->interaction_cubes[i].color);
+			scene->stackable_cubes[i].pos,
+			scene->stackable_cubes[i].width,
+			scene->stackable_cubes[i].height,
+			scene->stackable_cubes[i].length,
+			scene->stackable_cubes[i].color);
 
 		DrawCubeWires(
-			scene->interaction_cubes[i].pos,
-			scene->interaction_cubes[i].width,
-			scene->interaction_cubes[i].height,
-			scene->interaction_cubes[i].length,
-			scene->interaction_cubes[i].color);
+			scene->stackable_cubes[i].pos,
+			scene->stackable_cubes[i].width,
+			scene->stackable_cubes[i].height,
+			scene->stackable_cubes[i].length,
+			scene->stackable_cubes[i].color);
 	}
 
 	DrawCube(
@@ -140,7 +140,7 @@ void UpdateThirdStageScene(ThirdStageScene* scene) {
 		},
 		0,
 		scene->stageboard->scale,
-		WHITE);
+		scene->stageboard->color);
 
 	DrawCubeWires(
 		scene->player->collision_cube.pos,
@@ -151,7 +151,7 @@ void UpdateThirdStageScene(ThirdStageScene* scene) {
 
 	if (scene->can_draw_next_stage_plate) {
 		scene->next_stage_plate.color.a =
-			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.2f);
+			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.1f);
 
 		DrawCube(
 			scene->next_stage_plate.pos,

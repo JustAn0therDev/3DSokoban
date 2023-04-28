@@ -9,6 +9,7 @@ typedef struct stageboard {
 	float length;
 	float width;
 	float height;
+	Color color;
 } Stageboard;
 
 Stageboard* CreateStageboard();
