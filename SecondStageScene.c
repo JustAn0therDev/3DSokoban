@@ -59,29 +59,36 @@ void UpdateSecondStageScene(SecondStageScene* scene) {
 	UpdatePlayer(scene->player);
 	CustomUpdateCamera(scene->camera, scene->player);
 
+	if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cubes[0])) {
+		scene->interaction_cubes[0].pos = Vector3Add(
+			scene->interaction_cubes[0].pos,
+			scene->player->last_movement);
+	}
+
+	if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cubes[1])) {
+		scene->interaction_cubes[1].pos = Vector3Add(
+			scene->interaction_cubes[1].pos,
+			scene->player->last_movement);
+	}
+
 	int all_plates_activated = 1;
 
-	// Checking interaction cubes.
-	for (int i = 0; i < scene->plates_amount; i++) {
-		int activated_plate = 0;
-		if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cubes[i])) {
-			scene->interaction_cubes[i].pos = Vector3Add(
-				scene->interaction_cubes[i].pos,
-				scene->player->last_movement);
-		}
+	if (plate_collision(&scene->plates[0], &scene->interaction_cubes[0]) || 
+		plate_collision(&scene->plates[0], &scene->interaction_cubes[1])) {
+		scene->plates[0].color = GREEN;
+	}
+	else {
+		scene->plates[0].color = RED;
+		all_plates_activated = 0;
+	}
 
-		// Checking plates.
-		for (int j = 0; j < scene->plates_amount; j++) {
-			if (plate_collision(&scene->plates[i], &scene->interaction_cubes[j])) {
-				activated_plate = 1;
-				scene->plates[i].color = GREEN;
-			}
-		}
-
-		if (activated_plate == 0) {
-			all_plates_activated = 0;
-			scene->plates[i].color = RED;
-		}
+	if (plate_collision(&scene->plates[1], &scene->interaction_cubes[0]) ||
+		plate_collision(&scene->plates[1], &scene->interaction_cubes[1])) {
+		scene->plates[1].color = GREEN;
+	}
+	else {
+		scene->plates[1].color = RED;
+		all_plates_activated = 0;
 	}
 
 	if (all_plates_activated) {
@@ -98,7 +105,7 @@ void UpdateSecondStageScene(SecondStageScene* scene) {
 
 	BeginMode3D(*scene->camera);
 
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < scene->plates_amount; i++) {
 		DrawCube(
 			scene->interaction_cubes[i].pos,
 			scene->interaction_cubes[i].width,

@@ -22,7 +22,7 @@ int main(void) {
 	
 	SetTargetFPS(60);
 
-	int chosen_scene = 5;
+	int chosen_scene = 1;
 
 	FirstStageScene* first_stage_scene = 0;
 	SecondStageScene* second_stage_scene = 0;
