@@ -64,7 +64,7 @@ void UpdateSecondStageScene(SecondStageScene* scene) {
 	// Checking interaction cubes.
 	for (int i = 0; i < scene->plates_amount; i++) {
 		int activated_plate = 0;
-		if (collision_AABB(scene->player->collision_cube, scene->interaction_cubes[i])) {
+		if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cubes[i])) {
 			scene->interaction_cubes[i].pos = Vector3Add(
 				scene->interaction_cubes[i].pos,
 				scene->player->last_movement);
@@ -72,7 +72,7 @@ void UpdateSecondStageScene(SecondStageScene* scene) {
 
 		// Checking plates.
 		for (int j = 0; j < scene->plates_amount; j++) {
-			if (plate_collision(scene->plates[i], scene->interaction_cubes[j])) {
+			if (plate_collision(&scene->plates[i], &scene->interaction_cubes[j])) {
 				activated_plate = 1;
 				scene->plates[i].color = GREEN;
 			}

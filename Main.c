@@ -17,7 +17,7 @@
 #define HEIGHT 720
 
 int main(void) {
-	InitWindow(WIDTH, HEIGHT, "3D Sokoban");
+	InitWindow(WIDTH, HEIGHT, "Sokoban");
 	
 	SetTargetFPS(60);
 

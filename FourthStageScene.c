@@ -73,7 +73,7 @@ void UpdateFourthStageScene(FourthStageScene* scene) {
 	CustomUpdateCamera(scene->camera, scene->player);
 
 	// Checking stackable cubes.
-	if (collision_AABB(scene->player->collision_cube, scene->stackable_cubes[0])) {
+	if (collision_AABB(&scene->player->collision_cube, &scene->stackable_cubes[0])) {
 		scene->stackable_cubes[0].pos = Vector3Add(
 			scene->stackable_cubes[0].pos,
 			scene->player->last_movement);
@@ -85,13 +85,13 @@ void UpdateFourthStageScene(FourthStageScene* scene) {
 		}
 	}
 
-	if (collision_AABB(scene->player->collision_cube, scene->stackable_cubes[1])) {
+	if (collision_AABB(&scene->player->collision_cube, &scene->stackable_cubes[1])) {
 		scene->stackable_cubes[1].pos = Vector3Add(
 			scene->stackable_cubes[1].pos,
 			scene->player->last_movement);
 	}
 
-	if (collision_AABB(scene->stackable_cubes[0], scene->stackable_cubes[1])) {
+	if (collision_AABB(&scene->stackable_cubes[0], &scene->stackable_cubes[1])) {
 		scene->stacked_cubes = 1;
 		scene->stackable_cubes[1].pos.y += scene->stackable_cubes[1].height;
 		scene->stackable_cubes[1].pos.x = scene->stackable_cubes[0].pos.x;
@@ -99,15 +99,15 @@ void UpdateFourthStageScene(FourthStageScene* scene) {
 	}
 
 	// Checking interactable cubes.
-	if (collision_AABB(scene->player->collision_cube, scene->interaction_cube)) {
+	if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cube)) {
 		scene->interaction_cube.pos = Vector3Add(
 			scene->interaction_cube.pos,
 			scene->player->last_movement);
 	}
 
 	// Checking plate activation
-	if (((plate_collision(scene->heavy_plate, scene->stackable_cubes[0]) ||
-		plate_collision(scene->heavy_plate, scene->stackable_cubes[1])) &&
+	if (((plate_collision(&scene->heavy_plate, &scene->stackable_cubes[0]) ||
+		plate_collision(&scene->heavy_plate, &scene->stackable_cubes[1])) &&
 		scene->stacked_cubes)) {
 		scene->activated_heavy_plate = 1;
 		scene->heavy_plate.color = GREEN;
@@ -117,7 +117,7 @@ void UpdateFourthStageScene(FourthStageScene* scene) {
 		scene->heavy_plate.color = DARKBROWN;
 	}
 
-	if (plate_collision(scene->normal_plate, scene->interaction_cube)) {
+	if (plate_collision(&scene->normal_plate, &scene->interaction_cube)) {
 		scene->normal_plate.color = GREEN;
 		scene->activated_normal_plate = 1;
 	}

@@ -44,12 +44,12 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 	UpdatePlayer(scene->player);
 	CustomUpdateCamera(scene->camera, scene->player);
 
-	if (collision_AABB(scene->player->collision_cube, scene->interaction_cube)) {
+	if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cube)) {
 		scene->interaction_cube.pos =
 			Vector3Add(scene->interaction_cube.pos, scene->player->last_movement);
 	}
 
-	if (plate_collision(scene->interaction_cube, scene->plate)) {
+	if (plate_collision(&scene->interaction_cube, &scene->plate)) {
 		scene->plate.color = GREEN;
 		scene->can_draw_next_stage_plate = 1;
 	}
