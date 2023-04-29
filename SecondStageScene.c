@@ -14,7 +14,7 @@ SecondStageScene* CreateSecondStageScene() {
 	SecondStageScene* scene = malloc(sizeof(SecondStageScene));
 
 	if (scene == 0) {
-		printf("Unable to allocate memory for first scene object.\n");
+		printf("Unable to allocate memory for scene object.\n");
 		exit(1);
 	}
 

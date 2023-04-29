@@ -12,6 +12,7 @@
 #include "SecondStageScene.h"
 #include "ThirdStageScene.h"
 #include "FourthStageScene.h"
+#include "FifthStageScene.h"
 
 #define WIDTH 1280
 #define HEIGHT 720
@@ -21,12 +22,13 @@ int main(void) {
 	
 	SetTargetFPS(60);
 
-	int chosen_scene = 0;
+	int chosen_scene = 5;
 
 	FirstStageScene* first_stage_scene = 0;
 	SecondStageScene* second_stage_scene = 0;
 	ThirdStageScene* third_stage_scene = 0;
 	FourthStageScene* fourth_stage_scene = 0;
+	FifthStageScene* fifth_stage_scene = 0;
 
 	Image image_sin_city = LoadImage("Assets/Images/SinCity.png");
 	Texture texture_sin_city = LoadTextureFromImage(image_sin_city);
@@ -104,12 +106,28 @@ int main(void) {
 
 			if (fourth_stage_scene->finished_stage) {
 				FreeFourthStageScene(fourth_stage_scene);
+				chosen_scene++;
+			}
+
+			if (IsKeyPressed(KEY_R)) {
+				fourth_stage_scene = ResetFourthStageScene(fourth_stage_scene);
+			}
+			break;
+		case 5:
+			if (fifth_stage_scene == 0) {
+				fifth_stage_scene = CreateFifthStageScene();
+			}
+
+			UpdateFifthStageScene(fifth_stage_scene);
+
+			if (fifth_stage_scene->finished_stage) {
+				FreeFifthStageScene(fifth_stage_scene);
 				chosen_scene = -1;
 				break_game_loop = 1;
 			}
 
 			if (IsKeyPressed(KEY_R)) {
-				fourth_stage_scene = ResetFourthStageScene(fourth_stage_scene);
+				fifth_stage_scene = ResetFifthStageScene(fifth_stage_scene);
 			}
 			break;
 		default:
