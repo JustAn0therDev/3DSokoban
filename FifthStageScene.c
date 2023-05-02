@@ -143,7 +143,7 @@ void UpdateFifthStageScene(FifthStageScene* scene) {
 
 	BeginMode3D(*scene->camera);
 
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < scene->mirrored_cubes_amount; i++) {
 		DrawCube(
 			scene->mirrored_cubes[i].pos,
 			scene->mirrored_cubes[i].width,
