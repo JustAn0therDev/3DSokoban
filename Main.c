@@ -5,33 +5,31 @@
 #include <time.h>
 #include <math.h>
 #include "Camera.h"
+#include "Macros.h"
 #include "GameGeometry.h"
 #include "Player.h"
 #include "Physics.h"
+#include "TitleScene.h"
 #include "FirstStageScene.h"
 #include "SecondStageScene.h"
 #include "ThirdStageScene.h"
 #include "FourthStageScene.h"
 #include "FifthStageScene.h"
 
-#define WIDTH 1280
-#define HEIGHT 720
 
 int main(void) {
 	InitWindow(WIDTH, HEIGHT, "Sokoban");
 	
 	SetTargetFPS(60);
 
-	int chosen_scene = 1;
+	int chosen_scene = 0;
 
+	TitleScene* titlescene = CreateTitleScene();
 	FirstStageScene* first_stage_scene = 0;
 	SecondStageScene* second_stage_scene = 0;
 	ThirdStageScene* third_stage_scene = 0;
 	FourthStageScene* fourth_stage_scene = 0;
 	FifthStageScene* fifth_stage_scene = 0;
-
-	Image image_sin_city = LoadImage("Assets/Images/SinCity.png");
-	Texture texture_sin_city = LoadTextureFromImage(image_sin_city);
 
 	int break_game_loop = 0;
 
@@ -39,13 +37,10 @@ int main(void) {
 		switch (chosen_scene)
 		{
 		case 0:
-			BeginDrawing();
-			
-			DrawTexture(texture_sin_city, WIDTH / 4, HEIGHT / 5, WHITE);
-			
-			EndDrawing();
+			UpdateTitleScene(titlescene);
 
 			if (IsKeyPressed(KEY_ENTER)) {
+				FreeTitleScene(titlescene);
 				chosen_scene = 1; // TODO: choosing the second scene temporarily; this should be set to 1.
 			}
 			break;
@@ -138,9 +133,6 @@ int main(void) {
 			break;
 		}
 	}
-
-	UnloadTexture(texture_sin_city);
-	UnloadImage(image_sin_city);
 
 	return 0;
 }

@@ -18,6 +18,8 @@ Stageboard* CreateStageboard() {
 	stageboard->length = 2.0f;
 	stageboard->model = LoadModel("Assets/Models/Board.obj");
 	stageboard->color = DARKGRAY;
+	stageboard->rotation_angle = 0.0f;
+	stageboard->rotation_axis = (Vector3){ 0.0f, 1.0f, 0.0f };
 	
 	stageboard->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture = 
 		LoadTexture("Assets/Textures/stacked-stones.png");

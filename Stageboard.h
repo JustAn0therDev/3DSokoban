@@ -10,6 +10,8 @@ typedef struct stageboard {
 	float width;
 	float height;
 	Color color;
+	float rotation_angle;
+	Vector3 rotation_axis;
 } Stageboard;
 
 Stageboard* CreateStageboard();

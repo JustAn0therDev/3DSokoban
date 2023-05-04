@@ -191,10 +191,8 @@ void UpdateFifthStageScene(FifthStageScene* scene) {
 	DrawModelEx(
 		scene->stageboard->model,
 		scene->stageboard->pos,
-		(Vector3) {
-		0.0f, 0.0f, 0.0f
-		},
-		0,
+		scene->stageboard->rotation_axis,
+		scene->stageboard->rotation_angle,
 		scene->stageboard->scale,
 		scene->stageboard->color);
 
