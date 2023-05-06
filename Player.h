@@ -14,7 +14,7 @@ typedef struct player {
 	Vector3 rotation_axis;
 } Player;
 
-Player* InitializePlayer();
+Player* CreatePlayer();
 
 void UpdatePlayer(Player* player);
 

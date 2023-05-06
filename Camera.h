@@ -3,4 +3,4 @@
 #include "Player.h"
 
 Camera* CreateCamera();
-void CustomUpdateCamera(Camera* camera, Player* player);
+void CustomUpdateCamera(Camera* camera, Vector3 target);

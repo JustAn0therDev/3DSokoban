@@ -6,9 +6,9 @@
 
 typedef struct second_stage_scene {
 	Player* player;
-	Cube interaction_cubes[2];
-	Stageboard* stageboard;
 	Camera* camera;
+	Stageboard* stageboard;
+	Cube interaction_cubes[2];
 	Cube plates[2];
 	Cube next_stage_plate;
 	int can_draw_next_stage_plate;
@@ -19,4 +19,3 @@ typedef struct second_stage_scene {
 SecondStageScene* CreateSecondStageScene();
 void UpdateSecondStageScene(SecondStageScene* scene);
 SecondStageScene* ResetSecondStageScene(SecondStageScene* scene);
-void FreeSecondStageScene(SecondStageScene* scene);

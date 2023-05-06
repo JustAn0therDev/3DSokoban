@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <raylib.h>
 
-Player* InitializePlayer() {
+Player* CreatePlayer() {
 	Player* player = malloc(sizeof(Player));
 
 	if (player == 0) {

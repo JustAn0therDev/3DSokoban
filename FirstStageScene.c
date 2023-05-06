@@ -9,6 +9,7 @@
 #include "Macros.h"
 #include "Stageboard.h"
 #include "Physics.h"
+#include "Scene.h"
 
 FirstStageScene* CreateFirstStageScene() {
 	FirstStageScene* scene = malloc(sizeof(FirstStageScene));
@@ -18,7 +19,7 @@ FirstStageScene* CreateFirstStageScene() {
 		exit(1);
 	}
 
-	scene->player = InitializePlayer();
+	scene->player = CreatePlayer();
 	scene->camera = CreateCamera();
 
 	scene->interaction_cube = (Cube){
@@ -42,7 +43,7 @@ FirstStageScene* CreateFirstStageScene() {
 
 void UpdateFirstStageScene(FirstStageScene* scene) {
 	UpdatePlayer(scene->player);
-	CustomUpdateCamera(scene->camera, scene->player);
+	CustomUpdateCamera(scene->camera, scene->player->pos);
 
 	if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cube)) {
 		scene->interaction_cube.pos =
@@ -111,18 +112,19 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 
 	if (scene->can_draw_next_stage_plate) {
 		scene->next_stage_plate.color.a = 
-			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.1f);
-		
-		DrawCube(
-			scene->next_stage_plate.pos,
-			scene->next_stage_plate.width,
-			scene->next_stage_plate.height,
-			scene->next_stage_plate.length,
-			scene->next_stage_plate.color);
+			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
 	}
 	else {
-		scene->next_stage_plate.color.a = 0;
+		scene->next_stage_plate.color.a = 
+			(int)floor(Lerp(scene->next_stage_plate.color.a, 0, 0.1f));
 	}
+
+	DrawCube(
+		scene->next_stage_plate.pos,
+		scene->next_stage_plate.width,
+		scene->next_stage_plate.height,
+		scene->next_stage_plate.length,
+		scene->next_stage_plate.color);
 
 	EndMode3D();
 
@@ -136,12 +138,6 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 }
 
 FirstStageScene* ResetFirstStageScene(FirstStageScene* scene) {
-	FreeFirstStageScene(scene);
+	FreeScene((Scene*)scene);
 	return CreateFirstStageScene(scene);
-}
-
-void FreeFirstStageScene(FirstStageScene* scene) {
-	FreePlayer(scene->player);
-	FreeStageboard(scene->stageboard);
-	free(scene->camera);
 }

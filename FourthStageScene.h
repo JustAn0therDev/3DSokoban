@@ -6,10 +6,10 @@
 
 typedef struct fourth_stage_scene {
 	Player* player;
+	Camera* camera;
+	Stageboard* stageboard;
 	Cube interaction_cube;
 	Cube stackable_cubes[2];
-	Stageboard* stageboard;
-	Camera* camera;
 	Cube heavy_plate;
 	Cube normal_plate;
 	Cube next_stage_plate;
@@ -23,4 +23,3 @@ typedef struct fourth_stage_scene {
 FourthStageScene* CreateFourthStageScene();
 void UpdateFourthStageScene(FourthStageScene* scene);
 FourthStageScene* ResetFourthStageScene(FourthStageScene* scene);
-void FreeFourthStageScene(FourthStageScene* scene);

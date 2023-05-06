@@ -9,6 +9,7 @@
 #include "GameGeometry.h"
 #include "Player.h"
 #include "Physics.h"
+#include "Scene.h"
 #include "TitleScene.h"
 #include "FirstStageScene.h"
 #include "SecondStageScene.h"
@@ -16,6 +17,9 @@
 #include "FourthStageScene.h"
 #include "FifthStageScene.h"
 
+#ifdef _DEBUG
+	#include "Debug.h"
+#endif
 
 int main(void) {
 	InitWindow(WIDTH, HEIGHT, "Sokoban");
@@ -37,11 +41,15 @@ int main(void) {
 		switch (chosen_scene)
 		{
 		case 0:
+			if (titlescene == 0) {
+				titlescene = CreateTitleScene();
+			}
+
 			UpdateTitleScene(titlescene);
 
 			if (IsKeyPressed(KEY_ENTER)) {
 				FreeTitleScene(titlescene);
-				chosen_scene = 1; // TODO: choosing the second scene temporarily; this should be set to 1.
+				chosen_scene = 1;
 			}
 			break;
 		case 1:
@@ -52,7 +60,7 @@ int main(void) {
 			UpdateFirstStageScene(first_stage_scene);
 
 			if (first_stage_scene->finished_stage) {
-				FreeFirstStageScene(first_stage_scene);
+				FreeScene((Scene*)first_stage_scene);
 				chosen_scene++;
 			}
 
@@ -68,7 +76,7 @@ int main(void) {
 			UpdateSecondStageScene(second_stage_scene);
 
 			if (second_stage_scene->finished_stage) {
-				FreeSecondStageScene(second_stage_scene);
+				FreeScene((Scene*)second_stage_scene);
 				chosen_scene++;
 			}
 
@@ -84,7 +92,7 @@ int main(void) {
 			UpdateThirdStageScene(third_stage_scene);
 
 			if (third_stage_scene->finished_stage) {
-				FreeThirdStageScene(third_stage_scene);
+				FreeScene((Scene*)third_stage_scene);
 				chosen_scene++;
 			}
 
@@ -100,7 +108,7 @@ int main(void) {
 			UpdateFourthStageScene(fourth_stage_scene);
 
 			if (fourth_stage_scene->finished_stage) {
-				FreeFourthStageScene(fourth_stage_scene);
+				FreeScene((Scene*)fourth_stage_scene);
 				chosen_scene++;
 			}
 
@@ -116,7 +124,7 @@ int main(void) {
 			UpdateFifthStageScene(fifth_stage_scene);
 
 			if (fifth_stage_scene->finished_stage) {
-				FreeFifthStageScene(fifth_stage_scene);
+				FreeScene((Scene*)fifth_stage_scene);
 				chosen_scene = -1;
 				break_game_loop = 1;
 			}
@@ -132,6 +140,48 @@ int main(void) {
 		if (break_game_loop) {
 			break;
 		}
+
+#ifdef _DEBUG
+		int new_chosen_scene = GetChosenSceneByNumberKey();
+
+		if (new_chosen_scene > -1) {
+			chosen_scene = new_chosen_scene;
+		}
+		else {
+			// No new stages were selected.
+			continue;
+		}
+
+		if (chosen_scene != 0 && titlescene) {
+			FreeTitleScene(titlescene);
+			titlescene = 0;
+		}
+		
+		if (chosen_scene != 1 && first_stage_scene) {
+			FreeScene((Scene*)first_stage_scene);
+			first_stage_scene = 0;
+		}
+
+		if (chosen_scene != 2 && second_stage_scene) {
+			FreeScene((Scene*)second_stage_scene);
+			second_stage_scene = 0;
+		}
+
+		if (chosen_scene != 3 && third_stage_scene) {
+			FreeScene((Scene*)third_stage_scene);
+			third_stage_scene = 0;
+		}
+
+		if (chosen_scene != 4 && fourth_stage_scene) {
+			FreeScene((Scene*)fourth_stage_scene);
+			fourth_stage_scene = 0;
+		}
+
+		if (chosen_scene != 5 && fifth_stage_scene) {
+			FreeScene((Scene*)fifth_stage_scene);
+			fifth_stage_scene = 0;
+		}
+#endif
 	}
 
 	return 0;

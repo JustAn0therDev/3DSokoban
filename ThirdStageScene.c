@@ -9,6 +9,7 @@
 #include "Macros.h"
 #include "Stageboard.h"
 #include "Physics.h"
+#include "Scene.h"
 
 ThirdStageScene* CreateThirdStageScene() {
 	ThirdStageScene* scene = malloc(sizeof(ThirdStageScene));
@@ -18,7 +19,7 @@ ThirdStageScene* CreateThirdStageScene() {
 		exit(1);
 	}
 
-	scene->player = InitializePlayer();
+	scene->player = CreatePlayer();
 	scene->camera = CreateCamera();
 
 	scene->stackable_cubes[0] = (Cube){
@@ -56,7 +57,7 @@ ThirdStageScene* CreateThirdStageScene() {
 
 void UpdateThirdStageScene(ThirdStageScene* scene) {
 	UpdatePlayer(scene->player);
-	CustomUpdateCamera(scene->camera, scene->player);
+	CustomUpdateCamera(scene->camera, scene->player->pos);
 
 	// Checking interaction cubes.
 	if (collision_AABB(&scene->player->collision_cube, &scene->stackable_cubes[0])) {
@@ -101,21 +102,33 @@ void UpdateThirdStageScene(ThirdStageScene* scene) {
 
 	BeginMode3D(*scene->camera);
 
-	for (int i = 0; i < 2; i++) {
-		DrawCube(
-			scene->stackable_cubes[i].pos,
-			scene->stackable_cubes[i].width,
-			scene->stackable_cubes[i].height,
-			scene->stackable_cubes[i].length,
-			scene->stackable_cubes[i].color);
+	DrawCube(
+		scene->stackable_cubes[0].pos,
+		scene->stackable_cubes[0].width,
+		scene->stackable_cubes[0].height,
+		scene->stackable_cubes[0].length,
+		scene->stackable_cubes[0].color);
 
-		DrawCubeWires(
-			scene->stackable_cubes[i].pos,
-			scene->stackable_cubes[i].width,
-			scene->stackable_cubes[i].height,
-			scene->stackable_cubes[i].length,
-			scene->stackable_cubes[i].color);
-	}
+	DrawCubeWires(
+		scene->stackable_cubes[0].pos,
+		scene->stackable_cubes[0].width,
+		scene->stackable_cubes[0].height,
+		scene->stackable_cubes[0].length,
+		scene->stackable_cubes[0].color);
+
+	DrawCube(
+		scene->stackable_cubes[1].pos,
+		scene->stackable_cubes[1].width,
+		scene->stackable_cubes[1].height,
+		scene->stackable_cubes[1].length,
+		scene->stackable_cubes[1].color);
+
+	DrawCubeWires(
+		scene->stackable_cubes[1].pos,
+		scene->stackable_cubes[1].width,
+		scene->stackable_cubes[1].height,
+		scene->stackable_cubes[1].length,
+		scene->stackable_cubes[1].color);
 
 	DrawCube(
 		scene->heavy_plate.pos,
@@ -149,18 +162,19 @@ void UpdateThirdStageScene(ThirdStageScene* scene) {
 
 	if (scene->can_draw_next_stage_plate) {
 		scene->next_stage_plate.color.a =
-			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.1f);
-
-		DrawCube(
-			scene->next_stage_plate.pos,
-			scene->next_stage_plate.width,
-			scene->next_stage_plate.height,
-			scene->next_stage_plate.length,
-			scene->next_stage_plate.color);
+			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
 	}
 	else {
-		scene->next_stage_plate.color.a = 0;
+		scene->next_stage_plate.color.a =
+			(int)floor(Lerp(scene->next_stage_plate.color.a, 0, 0.1f));
 	}
+
+	DrawCube(
+		scene->next_stage_plate.pos,
+		scene->next_stage_plate.width,
+		scene->next_stage_plate.height,
+		scene->next_stage_plate.length,
+		scene->next_stage_plate.color);
 
 	EndMode3D();
 
@@ -174,12 +188,6 @@ void UpdateThirdStageScene(ThirdStageScene* scene) {
 }
 
 ThirdStageScene* ResetThirdStageScene(ThirdStageScene* scene) {
-	FreeThirdStageScene(scene);
+	FreeScene((Scene*)scene);
 	return CreateThirdStageScene(scene);
-}
-
-void FreeThirdStageScene(ThirdStageScene* scene) {
-	FreePlayer(scene->player);
-	FreeStageboard(scene->stageboard);
-	free(scene->camera);
 }

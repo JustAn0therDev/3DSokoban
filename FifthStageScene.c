@@ -9,6 +9,7 @@
 #include "Macros.h"
 #include "Stageboard.h"
 #include "Physics.h"
+#include "Scene.h"
 
 FifthStageScene* CreateFifthStageScene() {
 	FifthStageScene* scene = malloc(sizeof(FifthStageScene));
@@ -18,7 +19,7 @@ FifthStageScene* CreateFifthStageScene() {
 		exit(1);
 	}
 
-	scene->player = InitializePlayer();
+	scene->player = CreatePlayer();
 	scene->camera = CreateCamera();
 
 	Color transparent_white = (Color){ 255, 255, 255, 100 };
@@ -72,7 +73,7 @@ FifthStageScene* CreateFifthStageScene() {
 
 void UpdateFifthStageScene(FifthStageScene* scene) {
 	UpdatePlayer(scene->player);
-	CustomUpdateCamera(scene->camera, scene->player);
+	CustomUpdateCamera(scene->camera, scene->player->pos);
 
 	int object_can_move[2] = { 1, 1 };
 
@@ -205,18 +206,19 @@ void UpdateFifthStageScene(FifthStageScene* scene) {
 
 	if (scene->can_draw_next_stage_plate) {
 		scene->next_stage_plate.color.a =
-			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.1f);
-
-		DrawCube(
-			scene->next_stage_plate.pos,
-			scene->next_stage_plate.width,
-			scene->next_stage_plate.height,
-			scene->next_stage_plate.length,
-			scene->next_stage_plate.color);
+			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
 	}
 	else {
-		scene->next_stage_plate.color.a = 0;
+		scene->next_stage_plate.color.a =
+			(int)floor(Lerp(scene->next_stage_plate.color.a, 0, 0.1f));
 	}
+
+	DrawCube(
+		scene->next_stage_plate.pos,
+		scene->next_stage_plate.width,
+		scene->next_stage_plate.height,
+		scene->next_stage_plate.length,
+		scene->next_stage_plate.color);
 
 	EndMode3D();
 
@@ -230,12 +232,6 @@ void UpdateFifthStageScene(FifthStageScene* scene) {
 }
 
 FifthStageScene* ResetFifthStageScene(FifthStageScene* scene) {
-	FreeFifthStageScene(scene);
+	FreeScene((Scene*)scene);
 	return CreateFifthStageScene(scene);
-}
-
-void FreeFifthStageScene(FifthStageScene* scene) {
-	FreePlayer(scene->player);
-	FreeStageboard(scene->stageboard);
-	free(scene->camera);
 }

@@ -9,6 +9,7 @@
 #include "Macros.h"
 #include "Stageboard.h"
 #include "Physics.h"
+#include "Scene.h"
 
 SecondStageScene* CreateSecondStageScene() {
 	SecondStageScene* scene = malloc(sizeof(SecondStageScene));
@@ -18,7 +19,7 @@ SecondStageScene* CreateSecondStageScene() {
 		exit(1);
 	}
 
-	scene->player = InitializePlayer();
+	scene->player = CreatePlayer();
 	scene->camera = CreateCamera();
 
 	scene->interaction_cubes[0] = (Cube){
@@ -34,7 +35,7 @@ SecondStageScene* CreateSecondStageScene() {
 
 	scene->interaction_cubes[1] = (Cube){
 		(Vector3) {
-			-6.0f, 0.0f, 0.0f
+			-3.0f, 0.0f, 0.0f
 		},
 		2.0f,
 		2.0f,
@@ -45,7 +46,7 @@ SecondStageScene* CreateSecondStageScene() {
 
 	scene->plates_amount = 2;
 	scene->plates[0] = (Cube){ (Vector3) { 3.0f, -1.0f, -6.0f }, 3, 0, 3, RED, 0 };
-	scene->plates[1] = (Cube){ (Vector3) { -6.0f, -1.0f, -6.0f }, 3, 0, 3, RED, 0 };
+	scene->plates[1] = (Cube){ (Vector3) { -3.0f, -1.0f, -6.0f }, 3, 0, 3, RED, 0 };
 
 	scene->next_stage_plate = (Cube){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, (Color) { 0, 255, 0, 0 } };
 	scene->can_draw_next_stage_plate = 0;
@@ -57,7 +58,7 @@ SecondStageScene* CreateSecondStageScene() {
 
 void UpdateSecondStageScene(SecondStageScene* scene) {
 	UpdatePlayer(scene->player);
-	CustomUpdateCamera(scene->camera, scene->player);
+	CustomUpdateCamera(scene->camera, scene->player->pos);
 
 	if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cubes[0])) {
 		scene->interaction_cubes[0].pos = Vector3Add(
@@ -105,28 +106,47 @@ void UpdateSecondStageScene(SecondStageScene* scene) {
 
 	BeginMode3D(*scene->camera);
 
-	for (int i = 0; i < scene->plates_amount; i++) {
-		DrawCube(
-			scene->interaction_cubes[i].pos,
-			scene->interaction_cubes[i].width,
-			scene->interaction_cubes[i].height,
-			scene->interaction_cubes[i].length,
-			scene->interaction_cubes[i].color);
+	DrawCube(
+		scene->interaction_cubes[0].pos,
+		scene->interaction_cubes[0].width,
+		scene->interaction_cubes[0].height,
+		scene->interaction_cubes[0].length,
+		scene->interaction_cubes[0].color);
 
-		DrawCube(
-			scene->plates[i].pos,
-			scene->plates[i].width,
-			scene->plates[i].height,
-			scene->plates[i].length,
-			scene->plates[i].color);
+	DrawCube(
+		scene->plates[0].pos,
+		scene->plates[0].width,
+		scene->plates[0].height,
+		scene->plates[0].length,
+		scene->plates[0].color);
 
-		DrawCubeWires(
-			scene->interaction_cubes[i].pos,
-			scene->interaction_cubes[i].width,
-			scene->interaction_cubes[i].height,
-			scene->interaction_cubes[i].length,
-			scene->interaction_cubes[i].color);
-	}
+	DrawCubeWires(
+		scene->interaction_cubes[0].pos,
+		scene->interaction_cubes[0].width,
+		scene->interaction_cubes[0].height,
+		scene->interaction_cubes[0].length,
+		scene->interaction_cubes[0].color);
+	
+	DrawCube(
+		scene->interaction_cubes[1].pos,
+		scene->interaction_cubes[1].width,
+		scene->interaction_cubes[1].height,
+		scene->interaction_cubes[1].length,
+		scene->interaction_cubes[1].color);
+
+	DrawCube(
+		scene->plates[1].pos,
+		scene->plates[1].width,
+		scene->plates[1].height,
+		scene->plates[1].length,
+		scene->plates[1].color);
+
+	DrawCubeWires(
+		scene->interaction_cubes[1].pos,
+		scene->interaction_cubes[1].width,
+		scene->interaction_cubes[1].height,
+		scene->interaction_cubes[1].length,
+		scene->interaction_cubes[1].color);
 
 	DrawModelEx(
 		scene->player->model,
@@ -153,18 +173,19 @@ void UpdateSecondStageScene(SecondStageScene* scene) {
 
 	if (scene->can_draw_next_stage_plate) {
 		scene->next_stage_plate.color.a =
-			(int)Lerp(scene->next_stage_plate.color.a, 255, 0.1f);
-
-		DrawCube(
-			scene->next_stage_plate.pos,
-			scene->next_stage_plate.width,
-			scene->next_stage_plate.height,
-			scene->next_stage_plate.length,
-			scene->next_stage_plate.color);
+			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
 	}
 	else {
-		scene->next_stage_plate.color.a = 0;
+		scene->next_stage_plate.color.a =
+			(int)floor(Lerp(scene->next_stage_plate.color.a, 0, 0.1f));
 	}
+
+	DrawCube(
+		scene->next_stage_plate.pos,
+		scene->next_stage_plate.width,
+		scene->next_stage_plate.height,
+		scene->next_stage_plate.length,
+		scene->next_stage_plate.color);
 
 	EndMode3D();
 
@@ -178,12 +199,6 @@ void UpdateSecondStageScene(SecondStageScene* scene) {
 }
 
 SecondStageScene* ResetSecondStageScene(SecondStageScene* scene) {
-	FreeSecondStageScene(scene);
+	FreeScene((Scene*)scene);
 	return CreateSecondStageScene(scene);
-}
-
-void FreeSecondStageScene(SecondStageScene* scene) {
-	FreePlayer(scene->player);
-	FreeStageboard(scene->stageboard);
-	free(scene->camera);
 }

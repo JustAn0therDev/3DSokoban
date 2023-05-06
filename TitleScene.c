@@ -15,10 +15,10 @@ TitleScene* CreateTitleScene()
 		exit(1);
 	}
 
-	titlescene->player = InitializePlayer();
+	titlescene->player = CreatePlayer();
 	titlescene->camera = CreateCamera();
 	titlescene->stageboard = CreateStageboard();
-	titlescene->rotation_speed = 0.3f;
+	titlescene->rotation_speed = 0.2f;
 
 	// focus on the player
 	titlescene->camera->target = titlescene->player->pos;
@@ -29,11 +29,12 @@ TitleScene* CreateTitleScene()
 void FreeTitleScene(TitleScene* titlescene)
 {
 	FreePlayer(titlescene->player);
+	free(titlescene);
 }
 
 void UpdateTitleScene(TitleScene* titlescene)
 {
-	CustomUpdateCamera(titlescene->camera, titlescene->player);
+	CustomUpdateCamera(titlescene->camera, titlescene->player->pos);
 
 	// The main character model has to be fixed in a position.
 	// The player cannot control it. 

@@ -22,7 +22,7 @@ Camera* CreateCamera() {
 	return camera;
 }
 
-void CustomUpdateCamera(Camera* camera, Player* player) {
+void CustomUpdateCamera(Camera* camera, Vector3 pos) {
 	camera->position.z = Lerp(
 		camera->position.z, 
 		10.0f, 
@@ -33,7 +33,7 @@ void CustomUpdateCamera(Camera* camera, Player* player) {
 		10.0f,
 		0.1f);
 	
-	camera->target.x = Lerp(camera->target.x, player->pos.x / 2, 0.1f);
-	camera->target.y = Lerp(camera->target.y, player->pos.y / 2, 0.1f);
-	camera->target.z = Lerp(camera->target.z, player->pos.z / 2, 0.1f);
+	camera->target.x = Lerp(camera->target.x, pos.x / 2, 0.1f);
+	camera->target.y = Lerp(camera->target.y, pos.y / 2, 0.1f);
+	camera->target.z = Lerp(camera->target.z, pos.z / 2, 0.1f);
 }
