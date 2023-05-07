@@ -9,4 +9,4 @@ typedef struct scene {
 	Stageboard* stageboard;
 } Scene;
 
-void FreeScene(Scene* scene);
+void FreeScene(Scene** scene);

@@ -96,8 +96,6 @@ void UpdateThirdStageScene(ThirdStageScene* scene) {
 	}
 
 	// Drawing
-	BeginDrawing();
-
 	ClearBackground(SKYBLUE);
 
 	BeginMode3D(*scene->camera);
@@ -183,11 +181,9 @@ void UpdateThirdStageScene(ThirdStageScene* scene) {
 		scene->can_draw_next_stage_plate) {
 		scene->finished_stage = 1;
 	}
-
-	EndDrawing();
 }
 
 ThirdStageScene* ResetThirdStageScene(ThirdStageScene* scene) {
-	FreeScene((Scene*)scene);
+	FreeScene((Scene**)&scene);
 	return CreateThirdStageScene(scene);
 }

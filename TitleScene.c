@@ -43,8 +43,6 @@ void UpdateTitleScene(TitleScene* titlescene)
 	titlescene->stageboard->rotation_angle += titlescene->rotation_speed;
 
 	// Drawing
-	BeginDrawing();
-
 	ClearBackground(SKYBLUE);
 
 	BeginMode3D(*titlescene->camera);
@@ -70,6 +68,4 @@ void UpdateTitleScene(TitleScene* titlescene)
 	DrawText("SOKOBAN", (WIDTH / 2) - 180, HEIGHT / 8, 72, BROWN);
 
 	DrawText("PRESS ENTER TO BEGIN", (WIDTH / 2) - 300, HEIGHT - 100, 48, BLACK);
-
-	EndDrawing();
 }

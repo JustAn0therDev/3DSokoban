@@ -1,5 +1,7 @@
 #include "Debug.h"
 #include <raylib.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 int GetChosenSceneByNumberKey() {
 	if (IsKeyReleased(KEY_ZERO)) {
@@ -27,4 +29,34 @@ int GetChosenSceneByNumberKey() {
 	}
 
 	return -1;
+}
+
+void ShowInformation(Debug* debug) {
+	if (IsKeyReleased(KEY_KP_5)) {
+		if (debug->show_information == 0) {
+			debug->show_information = 1;
+		} else {
+			debug->show_information = 0;
+		}
+	}
+}
+
+void DrawGameInformation(Debug* debug) {
+	if (debug->show_information) {
+		char fps_buffer[10] = { 0 };
+		_itoa_s(GetFPS(), fps_buffer, 10, 10);
+		
+		char final_fps_buffer[50] = { 0 };
+		sprintf_s(final_fps_buffer, 50, "FPS: %s", fps_buffer);
+		
+		DrawText(final_fps_buffer, 0, 0, 24, BLACK);
+
+		char current_scene_buffer[10] = { 0 };
+		_itoa_s(debug->current_scene, current_scene_buffer, 10, 10);
+		char final_scene_buffer[50] = { 0 };
+
+		sprintf_s(final_scene_buffer, 50, "Scene: %s", current_scene_buffer);
+
+		DrawText(final_scene_buffer, 0, 20, 24, BLACK);
+	}
 }

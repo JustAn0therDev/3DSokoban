@@ -4,9 +4,10 @@
 #include "Camera.h"
 #include <stdlib.h>
 
-void FreeScene(Scene* scene) {
-	FreePlayer(scene->player);
-	FreeStageboard(scene->stageboard);
-	free(scene->camera);
-	free(scene);
+void FreeScene(Scene** scene) {
+	FreePlayer((*scene)->player);
+	FreeStageboard((*scene)->stageboard);
+	free((*scene)->camera);
+	free(*scene);
+	*scene = 0;
 }

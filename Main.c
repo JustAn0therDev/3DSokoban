@@ -26,6 +26,10 @@ int main(void) {
 	
 	SetTargetFPS(60);
 
+#ifdef _DEBUG
+	Debug debug = { 1, 0 };
+#endif
+
 	int chosen_scene = 0;
 
 	TitleScene* titlescene = CreateTitleScene();
@@ -38,6 +42,8 @@ int main(void) {
 	int break_game_loop = 0;
 
 	while (!WindowShouldClose()) {
+		BeginDrawing();
+
 		switch (chosen_scene)
 		{
 		case 0:
@@ -49,6 +55,7 @@ int main(void) {
 
 			if (IsKeyPressed(KEY_ENTER)) {
 				FreeTitleScene(titlescene);
+				titlescene = 0;
 				chosen_scene = 1;
 			}
 			break;
@@ -60,7 +67,7 @@ int main(void) {
 			UpdateFirstStageScene(first_stage_scene);
 
 			if (first_stage_scene->finished_stage) {
-				FreeScene((Scene*)first_stage_scene);
+				FreeScene((Scene**)&first_stage_scene);
 				chosen_scene++;
 			}
 
@@ -76,7 +83,7 @@ int main(void) {
 			UpdateSecondStageScene(second_stage_scene);
 
 			if (second_stage_scene->finished_stage) {
-				FreeScene((Scene*)second_stage_scene);
+				FreeScene((Scene**)&second_stage_scene);
 				chosen_scene++;
 			}
 
@@ -92,7 +99,7 @@ int main(void) {
 			UpdateThirdStageScene(third_stage_scene);
 
 			if (third_stage_scene->finished_stage) {
-				FreeScene((Scene*)third_stage_scene);
+				FreeScene((Scene**)&third_stage_scene);
 				chosen_scene++;
 			}
 
@@ -108,7 +115,7 @@ int main(void) {
 			UpdateFourthStageScene(fourth_stage_scene);
 
 			if (fourth_stage_scene->finished_stage) {
-				FreeScene((Scene*)fourth_stage_scene);
+				FreeScene((Scene**)&fourth_stage_scene);
 				chosen_scene++;
 			}
 
@@ -124,7 +131,7 @@ int main(void) {
 			UpdateFifthStageScene(fifth_stage_scene);
 
 			if (fifth_stage_scene->finished_stage) {
-				FreeScene((Scene*)fifth_stage_scene);
+				FreeScene((Scene**)&fifth_stage_scene);
 				chosen_scene = -1;
 				break_game_loop = 1;
 			}
@@ -137,12 +144,14 @@ int main(void) {
 			break;
 		}
 
-		if (break_game_loop) {
-			break;
-		}
-
 #ifdef _DEBUG
+		ShowInformation(&debug);
+		DrawGameInformation(&debug);
+		EndDrawing();
+
 		int new_chosen_scene = GetChosenSceneByNumberKey();
+
+		debug.current_scene = chosen_scene;
 
 		if (new_chosen_scene > -1) {
 			chosen_scene = new_chosen_scene;
@@ -152,36 +161,40 @@ int main(void) {
 			continue;
 		}
 
-		if (chosen_scene != 0 && titlescene) {
+		if (chosen_scene != 0 && titlescene != 0) {
 			FreeTitleScene(titlescene);
 			titlescene = 0;
 		}
 		
-		if (chosen_scene != 1 && first_stage_scene) {
-			FreeScene((Scene*)first_stage_scene);
+		if (chosen_scene != 1 && first_stage_scene != 0) {
+			FreeScene((Scene**)&first_stage_scene);
 			first_stage_scene = 0;
 		}
 
-		if (chosen_scene != 2 && second_stage_scene) {
-			FreeScene((Scene*)second_stage_scene);
+		if (chosen_scene != 2 && second_stage_scene != 0) {
+			FreeScene((Scene**)&second_stage_scene);
 			second_stage_scene = 0;
 		}
 
-		if (chosen_scene != 3 && third_stage_scene) {
-			FreeScene((Scene*)third_stage_scene);
+		if (chosen_scene != 3 && third_stage_scene != 0) {
+			FreeScene((Scene**)&third_stage_scene);
 			third_stage_scene = 0;
 		}
 
-		if (chosen_scene != 4 && fourth_stage_scene) {
-			FreeScene((Scene*)fourth_stage_scene);
+		if (chosen_scene != 4 && fourth_stage_scene != 0) {
+			FreeScene((Scene**)&fourth_stage_scene);
 			fourth_stage_scene = 0;
 		}
 
-		if (chosen_scene != 5 && fifth_stage_scene) {
-			FreeScene((Scene*)fifth_stage_scene);
+		if (chosen_scene != 5 && fifth_stage_scene != 0) {
+			FreeScene((Scene**)&fifth_stage_scene);
 			fifth_stage_scene = 0;
 		}
 #endif
+
+		if (break_game_loop) {
+			break;
+		}
 	}
 
 	return 0;
