@@ -57,14 +57,13 @@ void DrawGameInformation(Debug* debug) {
 		char final_fps_buffer[50] = { 0 };
 		sprintf_s(final_fps_buffer, 50, "FPS: %s", fps_buffer);
 		
-		DrawText(final_fps_buffer, 0, 0, 24, BLACK);
-
 		char current_scene_buffer[10] = { 0 };
 		_itoa_s(debug->current_scene, current_scene_buffer, 10, 10);
 		char final_scene_buffer[50] = { 0 };
 
 		sprintf_s(final_scene_buffer, 50, "Stage: %s", current_scene_buffer);
 
+		DrawText(final_fps_buffer, 0, 0, 24, BLACK);
 		DrawText(final_scene_buffer, 0, 20, 24, BLACK);
 	}
 }

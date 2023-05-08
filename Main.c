@@ -28,11 +28,13 @@ int main(void) {
 	
 	SetTargetFPS(60);
 
-#ifdef _DEBUG
-	Debug debug = { 1, 0 };
-#endif
-
 	int chosen_scene = 0;
+
+#ifdef _DEBUG
+	Debug debug = { 0 };
+	debug.show_information = 1;
+	debug.current_scene = chosen_scene;
+#endif
 
 	TitleScene* titlescene = CreateTitleScene();
 	FirstStageScene* first_stage_scene = 0;
