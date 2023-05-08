@@ -85,17 +85,19 @@ void UpdateSixthStageScene(SixthStageScene* scene) {
 
 	BeginMode3D(*scene->camera);
 
-	// Unstable cubes "eats" other cubes and their colors vary a lot.
-	unsigned char r = rand() % 255;
-	unsigned char g = rand() % 255;
-	unsigned char b = rand() % 255;
+	// Unstable cubes "eats" (or removes) other cubes and their colors vary a lot.
+	unsigned char r = rand() % UCHAR_MAX;
+	unsigned char g = rand() % UCHAR_MAX;
+	unsigned char b = rand() % UCHAR_MAX;
 
 	DrawCube(
 		scene->unstable_cube.pos,
 		scene->unstable_cube.width,
 		scene->unstable_cube.height,
 		scene->unstable_cube.length,
-		(Color){ r, g, b, 255 });
+		(Color) {
+		r, g, b, UCHAR_MAX
+	});
 
 	if (!scene->removed_interaction_cube) {
 		DrawCube(
@@ -118,7 +120,7 @@ void UpdateSixthStageScene(SixthStageScene* scene) {
 		scene->plate.width,
 		scene->plate.height,
 		scene->plate.length,
-		scene->plate.color);
+		(Color) { r, g, b, UCHAR_MAX });
 
 	DrawModelEx(
 		scene->player->model,

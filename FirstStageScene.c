@@ -126,6 +126,9 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 
 	EndMode3D();
 
+	DrawText("CONTROLS: ARROWS OR WASD", WIDTH / 6, HEIGHT / 8, 48, WHITE);
+	DrawText("PRESS R TO RESTART ANY STAGE", WIDTH / 6, HEIGHT / 4, 48, WHITE);
+
 	if (scene->player->pos.x == scene->next_stage_plate.pos.x &&
 		scene->player->pos.z == scene->next_stage_plate.pos.z &&
 		scene->can_draw_next_stage_plate) {

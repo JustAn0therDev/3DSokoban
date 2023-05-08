@@ -17,6 +17,7 @@
 #include "FourthStageScene.h"
 #include "FifthStageScene.h"
 #include "SixthStageScene.h"
+#include "SeventhStageScene.h"
 
 #ifdef _DEBUG
 	#include "Debug.h"
@@ -40,6 +41,7 @@ int main(void) {
 	FourthStageScene* fourth_stage_scene = 0;
 	FifthStageScene* fifth_stage_scene = 0;
 	SixthStageScene* sixth_stage_scene = 0;
+	SeventhStageScene* seventh_stage_scene = 0;
 
 	int break_game_loop = 0;
 
@@ -150,12 +152,28 @@ int main(void) {
 
 			if (sixth_stage_scene->finished_stage) {
 				FreeScene((Scene**)&sixth_stage_scene);
+				chosen_scene++;
+			}
+
+			if (IsKeyPressed(KEY_R)) {
+				sixth_stage_scene = ResetSixthStageScene(sixth_stage_scene);
+			}
+			break;
+		case 7:
+			if (seventh_stage_scene == 0) {
+				seventh_stage_scene = CreateSeventhStageScene();
+			}
+
+			UpdateSeventhStageScene(seventh_stage_scene);
+
+			if (seventh_stage_scene->finished_stage) {
+				FreeScene((Scene**)&seventh_stage_scene);
 				chosen_scene = -1;
 				break_game_loop = 1;
 			}
 
 			if (IsKeyPressed(KEY_R)) {
-				sixth_stage_scene = ResetSixthStageScene(sixth_stage_scene);
+				seventh_stage_scene = ResetSeventhStageScene(seventh_stage_scene);
 			}
 			break;
 		default:
@@ -207,8 +225,12 @@ int main(void) {
 			FreeScene((Scene**)&fifth_stage_scene);
 		}
 
-		if (chosen_scene != 5 && sixth_stage_scene != 0) {
+		if (chosen_scene != 6 && sixth_stage_scene != 0) {
 			FreeScene((Scene**)&sixth_stage_scene);
+		}
+
+		if (chosen_scene != 67&& seventh_stage_scene != 0) {
+			FreeScene((Scene**)&seventh_stage_scene);
 		}
 #else
 		if (break_game_loop) {

@@ -36,22 +36,22 @@ void UpdatePlayer(Player* player) {
 	player->last_movement = (Vector3){ 0 };
 
 	// Movement
-	if (IsKeyPressed(KEY_UP)) {
+	if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
 		player->pos.z--;
 		player->last_movement.z = -player->movement_speed;
 		player->rotation_angle = -90.0f;
 	}
-	else if (IsKeyPressed(KEY_LEFT)) {
+	else if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) {
 		player->pos.x--;
 		player->last_movement.x = -player->movement_speed;
 		player->rotation_angle = 0.0f;
 	}
-	else if (IsKeyPressed(KEY_RIGHT)) {
+	else if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) {
 		player->pos.x++;
 		player->last_movement.x = player->movement_speed;
 		player->rotation_angle = 180.0f;
 	}
-	else if (IsKeyPressed(KEY_DOWN)) {
+	else if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {
 		player->pos.z++;
 		player->last_movement.z = player->movement_speed;
 		player->rotation_angle = 90.0f;

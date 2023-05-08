@@ -140,6 +140,7 @@
     <ClCompile Include="FirstStageScene.c" />
     <ClCompile Include="FourthStageScene.c" />
     <ClCompile Include="Scene.c" />
+    <ClCompile Include="SeventhStageScene.c" />
     <ClCompile Include="SixthStageScene.c" />
     <ClCompile Include="TitleScene.c" />
     <ClInclude Include="Debug.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Stageboard.c" />
     <ClCompile Include="ThirdStageScene.c" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SeventhStageScene.h" />
     <ClInclude Include="SixthStageScene.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
