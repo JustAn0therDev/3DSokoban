@@ -28,6 +28,10 @@ int GetChosenSceneByNumberKey() {
 		return 5;
 	}
 
+	if (IsKeyReleased(KEY_SIX)) {
+		return 6;
+	}
+
 	return -1;
 }
 
@@ -55,7 +59,7 @@ void DrawGameInformation(Debug* debug) {
 		_itoa_s(debug->current_scene, current_scene_buffer, 10, 10);
 		char final_scene_buffer[50] = { 0 };
 
-		sprintf_s(final_scene_buffer, 50, "Scene: %s", current_scene_buffer);
+		sprintf_s(final_scene_buffer, 50, "Stage: %s", current_scene_buffer);
 
 		DrawText(final_scene_buffer, 0, 20, 24, BLACK);
 	}

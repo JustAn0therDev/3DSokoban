@@ -16,6 +16,7 @@
 #include "ThirdStageScene.h"
 #include "FourthStageScene.h"
 #include "FifthStageScene.h"
+#include "SixthStageScene.h"
 
 #ifdef _DEBUG
 	#include "Debug.h"
@@ -38,6 +39,7 @@ int main(void) {
 	ThirdStageScene* third_stage_scene = 0;
 	FourthStageScene* fourth_stage_scene = 0;
 	FifthStageScene* fifth_stage_scene = 0;
+	SixthStageScene* sixth_stage_scene = 0;
 
 	int break_game_loop = 0;
 
@@ -132,12 +134,28 @@ int main(void) {
 
 			if (fifth_stage_scene->finished_stage) {
 				FreeScene((Scene**)&fifth_stage_scene);
+				chosen_scene++;
+			}
+
+			if (IsKeyPressed(KEY_R)) {
+				fifth_stage_scene = ResetFifthStageScene(fifth_stage_scene);
+			}
+			break;
+		case 6:
+			if (sixth_stage_scene == 0) {
+				sixth_stage_scene = CreateSixthStageScene();
+			}
+
+			UpdateSixthStageScene(sixth_stage_scene);
+
+			if (sixth_stage_scene->finished_stage) {
+				FreeScene((Scene**)&sixth_stage_scene);
 				chosen_scene = -1;
 				break_game_loop = 1;
 			}
 
 			if (IsKeyPressed(KEY_R)) {
-				fifth_stage_scene = ResetFifthStageScene(fifth_stage_scene);
+				sixth_stage_scene = ResetSixthStageScene(sixth_stage_scene);
 			}
 			break;
 		default:
@@ -156,6 +174,9 @@ int main(void) {
 		if (new_chosen_scene > -1) {
 			chosen_scene = new_chosen_scene;
 		}
+		else if (break_game_loop) {
+			break;
+		}
 		else {
 			// No new stages were selected.
 			continue;
@@ -168,33 +189,34 @@ int main(void) {
 		
 		if (chosen_scene != 1 && first_stage_scene != 0) {
 			FreeScene((Scene**)&first_stage_scene);
-			first_stage_scene = 0;
 		}
 
 		if (chosen_scene != 2 && second_stage_scene != 0) {
 			FreeScene((Scene**)&second_stage_scene);
-			second_stage_scene = 0;
 		}
 
 		if (chosen_scene != 3 && third_stage_scene != 0) {
 			FreeScene((Scene**)&third_stage_scene);
-			third_stage_scene = 0;
 		}
 
 		if (chosen_scene != 4 && fourth_stage_scene != 0) {
 			FreeScene((Scene**)&fourth_stage_scene);
-			fourth_stage_scene = 0;
 		}
 
 		if (chosen_scene != 5 && fifth_stage_scene != 0) {
 			FreeScene((Scene**)&fifth_stage_scene);
-			fifth_stage_scene = 0;
 		}
-#endif
 
+		if (chosen_scene != 5 && sixth_stage_scene != 0) {
+			FreeScene((Scene**)&sixth_stage_scene);
+		}
+#else
 		if (break_game_loop) {
 			break;
 		}
+
+		EndDrawing();
+#endif
 	}
 
 	return 0;
