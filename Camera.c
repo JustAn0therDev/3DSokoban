@@ -33,7 +33,9 @@ void CustomUpdateCamera(Camera* camera, Vector3 pos) {
 		10.0f,
 		0.1f);
 	
+	camera->position.x = Lerp(camera->position.x, pos.x / 2, 0.1f);
 	camera->target.x = Lerp(camera->target.x, pos.x / 2, 0.1f);
 	camera->target.y = Lerp(camera->target.y, pos.y / 2, 0.1f);
+	
 	camera->target.z = Lerp(camera->target.z, pos.z / 2, 0.1f);
 }

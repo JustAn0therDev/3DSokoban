@@ -20,6 +20,7 @@ Player* CreatePlayer() {
 	player->model = LoadModel("Assets/Models/Knight.obj");
 	player->texture_ptr = 0;
 	player->last_movement = (Vector3){ 0 };
+	player->last_movement_time = 1;
 
 	player->collision_cube = (Cube){
 		player->pos,
@@ -35,26 +36,32 @@ Player* CreatePlayer() {
 void UpdatePlayer(Player* player) {
 	player->last_movement = (Vector3){ 0 };
 
-	// Movement
-	if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
-		player->pos.z--;
-		player->last_movement.z = -player->movement_speed;
-		player->rotation_angle = -90.0f;
-	}
-	else if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) {
-		player->pos.x--;
-		player->last_movement.x = -player->movement_speed;
-		player->rotation_angle = 0.0f;
-	}
-	else if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) {
-		player->pos.x++;
-		player->last_movement.x = player->movement_speed;
-		player->rotation_angle = 180.0f;
-	}
-	else if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {
-		player->pos.z++;
-		player->last_movement.z = player->movement_speed;
-		player->rotation_angle = 90.0f;
+	if (GetTime() - player->last_movement_time > 0.15f) {
+		// Movement
+		if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
+			player->pos.z--;
+			player->last_movement.z = -player->movement_speed;
+			player->rotation_angle = -90.0f;
+		}
+		else if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
+			player->pos.x--;
+			player->last_movement.x = -player->movement_speed;
+			player->rotation_angle = 0.0f;
+		}
+		else if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
+			player->pos.x++;
+			player->last_movement.x = player->movement_speed;
+			player->rotation_angle = 180.0f;
+		}
+		else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
+			player->pos.z++;
+			player->last_movement.z = player->movement_speed;
+			player->rotation_angle = 90.0f;
+		}
+
+		if (player->last_movement.z != 0 || player->last_movement.x != 0) {
+			player->last_movement_time = GetTime();
+		}
 	}
 
 	player->collision_cube.pos = player->pos;

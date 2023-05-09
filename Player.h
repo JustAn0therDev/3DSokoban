@@ -12,6 +12,7 @@ typedef struct player {
 	Vector3 last_movement;
 	Texture* texture_ptr;
 	Vector3 rotation_axis;
+	double last_movement_time;
 } Player;
 
 Player* CreatePlayer();
