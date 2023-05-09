@@ -18,7 +18,11 @@ TitleScene* CreateTitleScene()
 	titlescene->player = CreatePlayer();
 	titlescene->camera = CreateCamera();
 	titlescene->stageboard = CreateStageboard();
-	titlescene->rotation_speed = 0.2f;
+
+	titlescene->camera->position = (Vector3){ 10.0f, 10.0f, 10.0f };
+	titlescene->camera->target = titlescene->player->pos;
+
+	SetCameraMode(*titlescene->camera, CAMERA_ORBITAL);
 
 	// focus on the player
 	titlescene->camera->target = titlescene->player->pos;
@@ -34,13 +38,10 @@ void FreeTitleScene(TitleScene* titlescene)
 
 void UpdateTitleScene(TitleScene* titlescene)
 {
-	CustomUpdateCamera(titlescene->camera, titlescene->player->pos);
+	UpdateCamera(titlescene->camera);
 
 	// The main character model has to be fixed in a position.
 	// The player cannot control it. 
-	// Custom rotation of models, to simulate the camera rotating. 
-	titlescene->player->rotation_angle += titlescene->rotation_speed;
-	titlescene->stageboard->rotation_angle += titlescene->rotation_speed;
 
 	// Drawing
 	ClearBackground(SKYBLUE);
