@@ -4,6 +4,7 @@
 #include <raymath.h>
 #include <stdio.h>
 #include "Player.h"
+#include "Macros.h"
 
 Camera* CreateCamera() {
 	Camera* camera = malloc(sizeof(Camera));
@@ -23,19 +24,21 @@ Camera* CreateCamera() {
 }
 
 void CustomUpdateCamera(Camera* camera, Vector3 pos) {
+	float delta_time = GetFrameTime();
+	
 	camera->position.z = Lerp(
 		camera->position.z, 
 		10.0f, 
-		0.1f);
+		CAMERA_SPEED * delta_time);
 
 	camera->position.y = Lerp(
 		camera->position.y,
 		10.0f,
-		0.1f);
+		CAMERA_SPEED * delta_time);
 	
-	camera->position.x = Lerp(camera->position.x, pos.x / 2, 0.1f);
-	camera->target.x = Lerp(camera->target.x, pos.x / 2, 0.1f);
-	camera->target.y = Lerp(camera->target.y, pos.y / 2, 0.1f);
+	camera->position.x = Lerp(camera->position.x, pos.x / 2, CAMERA_SPEED * delta_time);
+	camera->target.x = Lerp(camera->target.x, pos.x / 2, CAMERA_SPEED * delta_time);
+	camera->target.y = Lerp(camera->target.y, pos.y / 2, CAMERA_SPEED * delta_time);
 	
-	camera->target.z = Lerp(camera->target.z, pos.z / 2, 0.1f);
+	camera->target.z = Lerp(camera->target.z, pos.z / 2, CAMERA_SPEED * delta_time);
 }
