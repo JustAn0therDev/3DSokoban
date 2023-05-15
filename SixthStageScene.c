@@ -15,7 +15,7 @@ SixthStageScene* CreateSixthStageScene() {
 	SixthStageScene* scene = malloc(sizeof(SixthStageScene));
 
 	if (scene == 0) {
-		printf("Unable to allocate memory for scene object.\n");
+		puts("Unable to allocate memory for scene object.");
 		exit(1);
 	}
 

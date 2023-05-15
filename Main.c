@@ -36,6 +36,7 @@ int main(void) {
 	debug.current_scene = chosen_scene;
 #endif
 
+	Ui* ui = CreateUi();
 	TitleScene* titlescene = CreateTitleScene();
 	FirstStageScene* first_stage_scene = 0;
 	SecondStageScene* second_stage_scene = 0;
@@ -57,7 +58,7 @@ int main(void) {
 				titlescene = CreateTitleScene();
 			}
 
-			UpdateTitleScene(titlescene);
+			UpdateTitleScene(titlescene, ui);
 
 			if (IsKeyPressed(KEY_ENTER)) {
 				FreeTitleScene(titlescene);
@@ -70,7 +71,7 @@ int main(void) {
 				first_stage_scene = CreateFirstStageScene();
 			}
 
-			UpdateFirstStageScene(first_stage_scene);
+			UpdateFirstStageScene(first_stage_scene, ui);
 
 			if (first_stage_scene->finished_stage) {
 				FreeScene((Scene**)&first_stage_scene);
@@ -242,6 +243,8 @@ int main(void) {
 		EndDrawing();
 #endif
 	}
+
+	FreeUi(ui);
 
 	return 0;
 }

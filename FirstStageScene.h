@@ -3,6 +3,7 @@
 #include "GameGeometry.h"
 #include "Camera.h"
 #include "Stageboard.h"
+#include "Ui.h"
 
 typedef struct first_stage_scene {
 	Player* player;
@@ -13,8 +14,9 @@ typedef struct first_stage_scene {
 	Cube next_stage_plate;
 	int can_draw_next_stage_plate;
 	int finished_stage;
+	double creation_time;
 } FirstStageScene;
 
 FirstStageScene* CreateFirstStageScene();
-void UpdateFirstStageScene(FirstStageScene* scene);
+void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui);
 FirstStageScene* ResetFirstStageScene(FirstStageScene* scene);

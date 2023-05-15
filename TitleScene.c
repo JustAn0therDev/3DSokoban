@@ -11,7 +11,7 @@ TitleScene* CreateTitleScene()
 	TitleScene* titlescene = malloc(sizeof(TitleScene));
 
 	if (titlescene == 0) {
-		printf("Couldn't allocate memory for title screen.\n");
+		puts("Couldn't allocate memory for title screen.");
 		exit(1);
 	}
 
@@ -36,7 +36,7 @@ void FreeTitleScene(TitleScene* titlescene)
 	free(titlescene);
 }
 
-void UpdateTitleScene(TitleScene* titlescene)
+void UpdateTitleScene(TitleScene* titlescene, Ui* ui)
 {
 	UpdateCamera(titlescene->camera);
 
@@ -66,7 +66,7 @@ void UpdateTitleScene(TitleScene* titlescene)
 
 	EndMode3D();
 
-	DrawText("SOKOBAN", (WIDTH / 2) - 180, HEIGHT / 8, 72, BROWN);
+	UiDrawText(ui, "SOKOBAN", (Vector2) { WIDTH / 2, HEIGHT / 8 }, BROWN);
 
-	DrawText("PRESS ENTER TO BEGIN", (WIDTH / 2) - 300, HEIGHT - 100, 48, BLACK);
+	UiDrawText(ui, "PRESS ENTER TO BEGIN", (Vector2) { WIDTH / 2, HEIGHT - 100 }, BLACK);
 }

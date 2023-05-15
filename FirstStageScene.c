@@ -15,7 +15,7 @@ FirstStageScene* CreateFirstStageScene() {
 	FirstStageScene* scene = malloc(sizeof(FirstStageScene));
 
 	if (scene == 0) {
-		printf("Unable to allocate memory for scene object.\n");
+		puts("Unable to allocate memory for scene object.");
 		exit(1);
 	}
 
@@ -37,11 +37,12 @@ FirstStageScene* CreateFirstStageScene() {
 	scene->can_draw_next_stage_plate = 0;
 	scene->finished_stage = 0;
 	scene->stageboard = CreateStageboard();
+	scene->creation_time = GetTime();
 
 	return scene;
 }
 
-void UpdateFirstStageScene(FirstStageScene* scene) {
+void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui) {
 	UpdatePlayer(scene->player);
 	CustomUpdateCamera(scene->camera, scene->player->pos);
 
@@ -109,6 +110,7 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 		scene->interaction_cube.color);
 
 	if (scene->can_draw_next_stage_plate) {
+		ui->color.a = (int)floor(Lerp(ui->color.a, 255, 0.1f));
 		scene->next_stage_plate.color.a = 
 			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
 	}
@@ -126,8 +128,19 @@ void UpdateFirstStageScene(FirstStageScene* scene) {
 
 	EndMode3D();
 
-	DrawText("CONTROLS: ARROWS OR WASD", WIDTH / 6, HEIGHT / 8, 48, WHITE);
-	DrawText("PRESS R TO RESTART ANY STAGE", WIDTH / 6, HEIGHT / 4, 48, WHITE);
+	if (!scene->can_draw_next_stage_plate) {
+		if (GetTime() - scene->creation_time < 4.0f) {
+			ui->color.a = (int)floor(Lerp(ui->color.a, 255, 0.1f));
+		}
+		else {
+			ui->color.a = (int)floor(Lerp(ui->color.a, 0, 0.1f));
+		}
+
+		UiDrawText(ui, "CONTROLS: ARROWS OR WASD", (Vector2) { WIDTH / 2, HEIGHT / 8 }, ui->color);
+		UiDrawText(ui, "PRESS R TO RESTART ANY STAGE", (Vector2) { WIDTH / 2, HEIGHT / 4 }, ui->color);
+	} else {
+		UiDrawText(ui, "MOVE TO THE LIT SQUARE.", (Vector2) { WIDTH / 2, HEIGHT / 4 }, ui->color);
+	}
 
 	if (scene->player->pos.x == scene->next_stage_plate.pos.x &&
 		scene->player->pos.z == scene->next_stage_plate.pos.z &&

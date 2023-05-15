@@ -8,7 +8,7 @@ Player* CreatePlayer() {
 	Player* player = malloc(sizeof(Player));
 
 	if (player == 0) {
-		printf("Unable to allocate memory for player.\n");
+		puts("Unable to allocate memory for player.");
 		exit(1);
 	}
 

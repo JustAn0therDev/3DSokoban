@@ -10,7 +10,7 @@ Camera* CreateCamera() {
 	Camera* camera = malloc(sizeof(Camera));
 
 	if (camera == 0) {
-		printf("Couldn't allocate memory for camera object.\n");
+		puts("Couldn't allocate memory for camera object.");
 		exit(1);
 	}
 

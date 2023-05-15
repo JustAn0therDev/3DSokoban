@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "Stageboard.h"
+#include "Ui.h"
 
 typedef struct TitleScene {
 	Player* player;
@@ -11,4 +12,4 @@ typedef struct TitleScene {
 
 TitleScene* CreateTitleScene();
 void FreeTitleScene(TitleScene* titlescene);
-void UpdateTitleScene(TitleScene* titlescene);
+void UpdateTitleScene(TitleScene* titlescene, Ui* ui);
