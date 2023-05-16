@@ -25,7 +25,7 @@ CustomShader* CreateCustomShader() {
 	SetShaderValue(custom_shader->shader, ambientLoc, (float[4]) { 0.1f, 0.1f, 0.1f, 1.0f }, SHADER_UNIFORM_VEC4);
 
 	// Create light
-	custom_shader->light = CreateLight(LIGHT_POINT, (Vector3) { -2, 60, -60 }, (Vector3) { 0, 50, -50 }, WHITE, custom_shader->shader);
+	custom_shader->light = CreateLight(LIGHT_POINT, (Vector3) { -2, 60, -60 }, (Vector3) { 0, 50, -50 }, RAYWHITE, custom_shader->shader);
 
 	return custom_shader;
 }
