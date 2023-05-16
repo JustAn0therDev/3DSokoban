@@ -16,7 +16,7 @@ Ui* CreateUi()
 
 	ui->font = LoadFont("Assets/Fonts/SocietyMembersRegular-L3vMn.ttf");
 	ui->font_size = 48.0f;
-	ui->color = (Color){ 127, 106, 79, 255 };
+	ui->color = BLACK;
 
 	return ui;
 }
