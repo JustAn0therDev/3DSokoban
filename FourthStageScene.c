@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "Macros.h"
 #include "Stageboard.h"
+#include "CustomShader.h"
 #include "Physics.h"
 #include "Scene.h"
 
@@ -42,7 +43,7 @@ FourthStageScene* CreateFourthStageScene() {
 		2.0f,
 		DARKBROWN,
 		0
-		};
+	};
 
 	scene->stackable_cubes[1] = (Cube){
 		(Vector3) {
@@ -65,6 +66,10 @@ FourthStageScene* CreateFourthStageScene() {
 	scene->activated_heavy_plate = 0;
 	scene->activated_normal_plate = 0;
 	scene->stageboard = CreateStageboard();
+	scene->custom_shader = CreateCustomShader();
+
+	scene->player->model.materials[0].shader = scene->custom_shader->shader;
+	scene->stageboard->model.materials[0].shader = scene->custom_shader->shader;
 
 	return scene;
 }
@@ -139,6 +144,9 @@ void UpdateFourthStageScene(FourthStageScene* scene) {
 	ClearBackground(SKYBLUE);
 
 	BeginMode3D(*scene->camera);
+
+	SetShaderValue(scene->custom_shader->shader, scene->custom_shader->shader.locs[SHADER_LOC_VECTOR_VIEW], scene->camera, SHADER_UNIFORM_VEC3);
+	UpdateLightValues(&scene->custom_shader->shader, &scene->custom_shader->light);
 
 	for (int i = 0; i < 2; i++) {
 		DrawCube(

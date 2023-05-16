@@ -4,11 +4,13 @@
 #include "Camera.h"
 #include "Stageboard.h"
 #include "Ui.h"
+#include "CustomShader.h"
 
 typedef struct first_stage_scene {
 	Player* player;
 	Camera* camera;
 	Stageboard* stageboard;
+	CustomShader* custom_shader;
 	Cube interaction_cube;
 	Cube plate;
 	Cube next_stage_plate;

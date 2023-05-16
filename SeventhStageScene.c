@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "Macros.h"
 #include "Stageboard.h"
+#include "CustomShader.h"
 #include "Physics.h"
 #include "Scene.h"
 
@@ -53,7 +54,6 @@ SeventhStageScene* CreateSeventhStageScene() {
 		BLACK
 	};
 
-
 	scene->unstable_cubes[2] = (Cube){
 		(Vector3) {
 			18.0f, 0.0f, 2.0f
@@ -64,7 +64,6 @@ SeventhStageScene* CreateSeventhStageScene() {
 		BLACK
 	};
 
-
 	scene->unstable_cubes[3] = (Cube){
 		(Vector3) {
 			20.0f, 0.0f, -7.0f
@@ -74,7 +73,6 @@ SeventhStageScene* CreateSeventhStageScene() {
 		2.0f,
 		BLACK
 	};
-
 
 	scene->unstable_cubes[4] = (Cube){
 		(Vector3) {
@@ -105,7 +103,6 @@ SeventhStageScene* CreateSeventhStageScene() {
 		2.0f,
 		BLACK
 	};
-
 	
 	scene->mirrored_cubes[0] = (Cube){
 		(Vector3) {
@@ -139,6 +136,10 @@ SeventhStageScene* CreateSeventhStageScene() {
 	scene->removed_mirrored_cubes[0] = 0;
 	scene->removed_mirrored_cubes[1] = 0;
 	scene->amount_of_unstable_cubes = 7;
+	scene->custom_shader = CreateCustomShader();
+
+	scene->player->model.materials[0].shader = scene->custom_shader->shader;
+	scene->stageboard->model.materials[0].shader = scene->custom_shader->shader;
 
 	return scene;
 }
@@ -225,6 +226,9 @@ void UpdateSeventhStageScene(SeventhStageScene* scene) {
 	ClearBackground(SKYBLUE);
 
 	BeginMode3D(*scene->camera);
+
+	SetShaderValue(scene->custom_shader->shader, scene->custom_shader->shader.locs[SHADER_LOC_VECTOR_VIEW], scene->camera, SHADER_UNIFORM_VEC3);
+	UpdateLightValues(&scene->custom_shader->shader, &scene->custom_shader->light);
 
 	// Unstable cubes "eats" (or removes) other cubes and their colors vary a lot.
 	unsigned char r = rand() % UCHAR_MAX;

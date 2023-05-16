@@ -10,6 +10,7 @@
 #include "Stageboard.h"
 #include "Physics.h"
 #include "Scene.h"
+#include "CustomShader.h"
 
 FirstStageScene* CreateFirstStageScene() {
 	FirstStageScene* scene = malloc(sizeof(FirstStageScene));
@@ -38,6 +39,10 @@ FirstStageScene* CreateFirstStageScene() {
 	scene->finished_stage = 0;
 	scene->stageboard = CreateStageboard();
 	scene->creation_time = GetTime();
+	scene->custom_shader = CreateCustomShader();
+
+	scene->player->model.materials[0].shader = scene->custom_shader->shader;
+	scene->stageboard->model.materials[0].shader = scene->custom_shader->shader;
 
 	return scene;
 }
@@ -64,6 +69,9 @@ void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui) {
 	ClearBackground(SKYBLUE);
 
 	BeginMode3D(*scene->camera);
+
+	SetShaderValue(scene->custom_shader->shader, scene->custom_shader->shader.locs[SHADER_LOC_VECTOR_VIEW], scene->camera, SHADER_UNIFORM_VEC3);
+	UpdateLightValues(&scene->custom_shader->shader, &scene->custom_shader->light);
 
 	DrawCube(
 		scene->interaction_cube.pos,
@@ -139,7 +147,7 @@ void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui) {
 		UiDrawText(ui, "CONTROLS: ARROWS OR WASD", (Vector2) { WIDTH / 2, HEIGHT / 8 }, ui->color);
 		UiDrawText(ui, "PRESS R TO RESTART ANY STAGE", (Vector2) { WIDTH / 2, HEIGHT / 4 }, ui->color);
 	} else {
-		UiDrawText(ui, "MOVE TO THE LIT SQUARE.", (Vector2) { WIDTH / 2, HEIGHT / 4 }, ui->color);
+		UiDrawText(ui, "GET TO THE LIT SQUARE.", (Vector2) { WIDTH / 2, HEIGHT / 4 }, ui->color);
 	}
 
 	if (scene->player->pos.x == scene->next_stage_plate.pos.x &&

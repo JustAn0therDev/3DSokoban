@@ -3,11 +3,13 @@
 #include "GameGeometry.h"
 #include "Camera.h"
 #include "Stageboard.h"
+#include "CustomShader.h"
 
 typedef struct seventh_stage_scene {
 	Player* player;
 	Camera* camera;
 	Stageboard* stageboard;
+	CustomShader* custom_shader;
 	Cube immovable_cube;
 	Cube unstable_cubes[7];
 	Cube mirrored_cubes[2];

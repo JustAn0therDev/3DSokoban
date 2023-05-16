@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "Macros.h"
 #include "Stageboard.h"
+#include "CustomShader.h"
 #include "Physics.h"
 #include "Scene.h"
 
@@ -48,6 +49,10 @@ SixthStageScene* CreateSixthStageScene() {
 	scene->finished_stage = 0;
 	scene->stageboard = CreateStageboard();
 	scene->removed_interaction_cube = 0;
+	scene->custom_shader = CreateCustomShader();
+
+	scene->player->model.materials[0].shader = scene->custom_shader->shader;
+	scene->stageboard->model.materials[0].shader = scene->custom_shader->shader;
 
 	return scene;
 }
@@ -84,6 +89,9 @@ void UpdateSixthStageScene(SixthStageScene* scene) {
 	ClearBackground(SKYBLUE);
 
 	BeginMode3D(*scene->camera);
+
+	SetShaderValue(scene->custom_shader->shader, scene->custom_shader->shader.locs[SHADER_LOC_VECTOR_VIEW], scene->camera, SHADER_UNIFORM_VEC3);
+	UpdateLightValues(&scene->custom_shader->shader, &scene->custom_shader->light);
 
 	// Unstable cubes "eats" (or removes) other cubes and their colors vary a lot.
 	unsigned char r = rand() % UCHAR_MAX;
