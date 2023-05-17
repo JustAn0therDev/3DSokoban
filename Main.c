@@ -232,7 +232,7 @@ int main(void) {
 			FreeScene((Scene**)&sixth_stage_scene);
 		}
 
-		if (chosen_scene != 67&& seventh_stage_scene != 0) {
+		if (chosen_scene != 7 && seventh_stage_scene != 0) {
 			FreeScene((Scene**)&seventh_stage_scene);
 		}
 #else
