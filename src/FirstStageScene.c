@@ -104,13 +104,6 @@ void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui) {
 		scene->stageboard->color);
 
 	DrawCubeWires(
-		scene->player->collision_cube.pos,
-		scene->player->collision_cube.width,
-		scene->player->collision_cube.height,
-		scene->player->collision_cube.length,
-		BLACK);
-
-	DrawCubeWires(
 		scene->interaction_cube.pos,
 		scene->interaction_cube.width,
 		scene->interaction_cube.height,

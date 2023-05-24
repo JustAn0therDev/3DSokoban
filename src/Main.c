@@ -26,7 +26,7 @@
 int main(void) {
 	InitWindow(WIDTH, HEIGHT, "Sokoban");
 	
-	SetTargetFPS(60);
+	SetTargetFPS(165);
 
 	int chosen_scene = 0;
 

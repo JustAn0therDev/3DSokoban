@@ -13,14 +13,19 @@ Player* CreatePlayer() {
 	}
 
 	player->pos = (Vector3){ 0 };
-	player->scale = (Vector3){ 0.1f, 0.1f, 0.1f };
+	player->scale = (Vector3){ 0.15f, 0.15f, 0.15f };
+    player->rotation_angle = 0.0f;
 	player->rotation_axis = (Vector3){ 0.0f, 1.0f, 0.0f };
-	player->rotation_angle = 0.0f;
 	player->movement_speed = 1;
-	player->model = LoadModel("Assets/Models/Knight.obj");
+	player->model = LoadModel("Assets/Models/Robot.obj");
 	player->texture_ptr = 0;
 	player->last_movement = (Vector3){ 0 };
 	player->last_movement_time = 1;
+
+	player->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture = 
+		LoadTexture("Assets/Textures/Chess_Board.png");
+
+    player->texture_ptr = &player->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture;
 
 	player->collision_cube = (Cube){
 		player->pos,
@@ -41,22 +46,22 @@ void UpdatePlayer(Player* player) {
 		if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
 			player->pos.z--;
 			player->last_movement.z = -player->movement_speed;
-			player->rotation_angle = -90.0f;
+			player->rotation_angle = 90.0f;
 		}
 		else if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
 			player->pos.x--;
 			player->last_movement.x = -player->movement_speed;
-			player->rotation_angle = 0.0f;
+			player->rotation_angle = 180.0f;
 		}
 		else if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
 			player->pos.x++;
 			player->last_movement.x = player->movement_speed;
-			player->rotation_angle = 180.0f;
+			player->rotation_angle = 0.0f;
 		}
 		else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
 			player->pos.z++;
 			player->last_movement.z = player->movement_speed;
-			player->rotation_angle = 90.0f;
+			player->rotation_angle = 270.0f;
 		}
 
 		if (player->last_movement.z != 0 || player->last_movement.x != 0) {
@@ -73,6 +78,10 @@ void FreePlayer(Player* player) {
 	}
 
 	UnloadModel(player->model);
+
+    if (player->texture_ptr != 0) {
+        UnloadTexture(*player->texture_ptr);
+    }
 
 	free(player);
 }

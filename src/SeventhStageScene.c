@@ -308,13 +308,6 @@ void UpdateSeventhStageScene(SeventhStageScene* scene) {
 		scene->stageboard->scale,
 		scene->stageboard->color);
 
-	DrawCubeWires(
-		scene->player->collision_cube.pos,
-		scene->player->collision_cube.width,
-		scene->player->collision_cube.height,
-		scene->player->collision_cube.length,
-		BLACK);
-
 	if (scene->can_draw_next_stage_plate) {
 		scene->next_stage_plate.color.a =
 			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
