@@ -1,10 +1,10 @@
-#include "Camera.h"
+#include "header_files/Camera.h"
 #include <stdlib.h>
 #include <raylib.h>
 #include <raymath.h>
 #include <stdio.h>
-#include "Player.h"
-#include "Macros.h"
+#include "header_files/Player.h"
+#include "header_files/Macros.h"
 
 Camera* CreateCamera() {
 	Camera* camera = malloc(sizeof(Camera));

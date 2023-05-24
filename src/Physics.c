@@ -1,5 +1,5 @@
-#include "Physics.h"
-#include "GameGeometry.h"
+#include "header_files/Physics.h"
+#include "header_files/GameGeometry.h"
 
 int collision_AABB(Cube* cube1, Cube* cube2) {
 	float cube1top = cube1->pos.y + cube1->height / 2;

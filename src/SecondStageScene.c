@@ -1,16 +1,16 @@
-#include "SecondStageScene.h"
-#include "Player.h"
-#include "Camera.h"
-#include "GameGeometry.h"
+#include "header_files/SecondStageScene.h"
+#include "header_files/Player.h"
+#include "header_files/Camera.h"
+#include "header_files/GameGeometry.h"
 #include <raylib.h>
 #include <raymath.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Macros.h"
-#include "Stageboard.h"
-#include "CustomShader.h"
-#include "Physics.h"
-#include "Scene.h"
+#include "header_files/Macros.h"
+#include "header_files/Stageboard.h"
+#include "header_files/CustomShader.h"
+#include "header_files/Physics.h"
+#include "header_files/Scene.h"
 
 SecondStageScene* CreateSecondStageScene() {
 	SecondStageScene* scene = malloc(sizeof(SecondStageScene));

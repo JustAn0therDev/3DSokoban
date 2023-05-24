@@ -1,8 +1,8 @@
-#include "Scene.h"
-#include "Player.h"
-#include "Stageboard.h"
-#include "Camera.h"
-#include "CustomShader.h"
+#include "header_files/Scene.h"
+#include "header_files/Player.h"
+#include "header_files/Stageboard.h"
+#include "header_files/Camera.h"
+#include "header_files/CustomShader.h"
 #include <stdlib.h>
 
 void FreeScene(Scene** scene) {

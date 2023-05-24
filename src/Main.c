@@ -4,23 +4,23 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include "Camera.h"
-#include "Macros.h"
-#include "GameGeometry.h"
-#include "Player.h"
-#include "Physics.h"
-#include "Scene.h"
-#include "TitleScene.h"
-#include "FirstStageScene.h"
-#include "SecondStageScene.h"
-#include "ThirdStageScene.h"
-#include "FourthStageScene.h"
-#include "FifthStageScene.h"
-#include "SixthStageScene.h"
-#include "SeventhStageScene.h"
+#include "header_files/Camera.h"
+#include "header_files/Macros.h"
+#include "header_files/GameGeometry.h"
+#include "header_files/Player.h"
+#include "header_files/Physics.h"
+#include "header_files/Scene.h"
+#include "header_files/TitleScene.h"
+#include "header_files/FirstStageScene.h"
+#include "header_files/SecondStageScene.h"
+#include "header_files/ThirdStageScene.h"
+#include "header_files/FourthStageScene.h"
+#include "header_files/FifthStageScene.h"
+#include "header_files/SixthStageScene.h"
+#include "header_files/SeventhStageScene.h"
 
 #ifdef _DEBUG
-	#include "Debug.h"
+	#include "header_files/Debug.h"
 #endif
 
 int main(void) {

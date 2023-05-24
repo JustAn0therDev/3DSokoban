@@ -1,5 +1,5 @@
-#include "Player.h"
-#include "GameGeometry.h"
+#include "header_files/Player.h"
+#include "header_files/GameGeometry.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <raylib.h>

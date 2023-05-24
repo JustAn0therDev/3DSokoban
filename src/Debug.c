@@ -1,4 +1,4 @@
-#include "Debug.h"
+#include "header_files/Debug.h"
 #include <raylib.h>
 #include <stdlib.h>
 #include <stdio.h>

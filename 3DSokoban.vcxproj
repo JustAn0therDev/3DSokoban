@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{6b437b86-d3a6-4da0-800c-3ea89f3b0792}</ProjectGuid>
-    <RootNamespace>My3DTestRaylib</RootNamespace>
+    <RootNamespace>3DSokoban</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>3DSokoban</ProjectName>
   </PropertyGroup>
@@ -135,43 +135,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.c" />
-    <ClCompile Include="CustomShader.c" />
-    <ClCompile Include="Debug.c" />
-    <ClCompile Include="FifthStageScene.c" />
-    <ClCompile Include="FirstStageScene.c" />
-    <ClCompile Include="FourthStageScene.c" />
-    <ClCompile Include="Scene.c" />
-    <ClCompile Include="SeventhStageScene.c" />
-    <ClCompile Include="SixthStageScene.c" />
-    <ClCompile Include="TitleScene.c" />
-    <ClCompile Include="Ui.c" />
-    <ClInclude Include="Debug.h" />
-    <ClInclude Include="FifthStageScene.h" />
-    <ClInclude Include="FourthStageScene.h" />
-    <ClCompile Include="Player.c" />
-    <ClCompile Include="Main.c" />
-    <ClCompile Include="Physics.c" />
-    <ClCompile Include="SecondStageScene.c" />
-    <ClCompile Include="Stageboard.c" />
-    <ClCompile Include="ThirdStageScene.c" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SeventhStageScene.h" />
-    <ClInclude Include="CustomShader.h" />
-    <ClInclude Include="SixthStageScene.h" />
-    <ClInclude Include="TitleScene.h" />
-    <ClInclude Include="Ui.h" />
+    <ClCompile Include="src/Camera.c" />
+    <ClCompile Include="src/CustomShader.c" />
+    <ClCompile Include="src/Debug.c" />
+    <ClCompile Include="src/FifthStageScene.c" />
+    <ClCompile Include="src/FirstStageScene.c" />
+    <ClCompile Include="src/FourthStageScene.c" />
+    <ClCompile Include="src/Scene.c" />
+    <ClCompile Include="src/SeventhStageScene.c" />
+    <ClCompile Include="src/SixthStageScene.c" />
+    <ClCompile Include="src/TitleScene.c" />
+    <ClCompile Include="src/Ui.c" />
+    <ClInclude Include="src/header_files/Debug.h" />
+    <ClInclude Include="src/header_files/FifthStageScene.h" />
+    <ClInclude Include="src/header_files/FourthStageScene.h" />
+    <ClCompile Include="src/Player.c" />
+    <ClCompile Include="src/Main.c" />
+    <ClCompile Include="src/Physics.c" />
+    <ClCompile Include="src/SecondStageScene.c" />
+    <ClCompile Include="src/Stageboard.c" />
+    <ClCompile Include="src/ThirdStageScene.c" />
+    <ClInclude Include="src/header_files/Scene.h" />
+    <ClInclude Include="src/header_files/SeventhStageScene.h" />
+    <ClInclude Include="src/header_files/CustomShader.h" />
+    <ClInclude Include="src/header_files/SixthStageScene.h" />
+    <ClInclude Include="src/header_files/TitleScene.h" />
+    <ClInclude Include="src/header_files/Ui.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="FirstStageScene.h" />
-    <ClInclude Include="Macros.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="GameGeometry.h" />
-    <ClInclude Include="Physics.h" />
-    <ClInclude Include="SecondStageScene.h" />
-    <ClInclude Include="Stageboard.h" />
-    <ClInclude Include="ThirdStageScene.h" />
+    <ClInclude Include="src/header_files/Camera.h" />
+    <ClInclude Include="src/header_files/FirstStageScene.h" />
+    <ClInclude Include="src/header_files/Macros.h" />
+    <ClInclude Include="src/header_files/Player.h" />
+    <ClInclude Include="src/header_files/GameGeometry.h" />
+    <ClInclude Include="src/header_files/Physics.h" />
+    <ClInclude Include="src/header_files/SecondStageScene.h" />
+    <ClInclude Include="src/header_files/Stageboard.h" />
+    <ClInclude Include="src/header_files/ThirdStageScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,19 +1,19 @@
-#include "FirstStageScene.h"
-#include "Player.h"
-#include "Camera.h"
-#include "GameGeometry.h"
+#include "header_files/SixthStageScene.h"
+#include "header_files/Player.h"
+#include "header_files/Camera.h"
+#include "header_files/GameGeometry.h"
 #include <raylib.h>
 #include <raymath.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Macros.h"
-#include "Stageboard.h"
-#include "Physics.h"
-#include "Scene.h"
-#include "CustomShader.h"
+#include "header_files/Macros.h"
+#include "header_files/Stageboard.h"
+#include "header_files/CustomShader.h"
+#include "header_files/Physics.h"
+#include "header_files/Scene.h"
 
-FirstStageScene* CreateFirstStageScene() {
-	FirstStageScene* scene = malloc(sizeof(FirstStageScene));
+SixthStageScene* CreateSixthStageScene() {
+	SixthStageScene* scene = malloc(sizeof(SixthStageScene));
 
 	if (scene == 0) {
 		puts("Unable to allocate memory for scene object.");
@@ -23,9 +23,19 @@ FirstStageScene* CreateFirstStageScene() {
 	scene->player = CreatePlayer();
 	scene->camera = CreateCamera();
 
-	scene->interaction_cube = (Cube){
+	scene->unstable_cube = (Cube){
 		(Vector3) {
 			3.0f, 0.0f, 0.0f
+		},
+		2.0f,
+		2.0f,
+		2.0f,
+		BLACK
+	};
+
+	scene->interaction_cube = (Cube){
+		(Vector3) {
+			6.0f, 0.0f, 0.0f
 		},
 		2.0f,
 		2.0f,
@@ -38,7 +48,7 @@ FirstStageScene* CreateFirstStageScene() {
 	scene->can_draw_next_stage_plate = 0;
 	scene->finished_stage = 0;
 	scene->stageboard = CreateStageboard();
-	scene->creation_time = GetTime();
+	scene->removed_interaction_cube = 0;
 	scene->custom_shader = CreateCustomShader();
 
 	scene->player->model.materials[0].shader = scene->custom_shader->shader;
@@ -47,22 +57,32 @@ FirstStageScene* CreateFirstStageScene() {
 	return scene;
 }
 
-void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui) {
+void UpdateSixthStageScene(SixthStageScene* scene) {
 	UpdatePlayer(scene->player);
 	CustomUpdateCamera(scene->camera, scene->player->pos);
 
-	if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cube)) {
+	if (collision_AABB(&scene->player->collision_cube, &scene->unstable_cube)) {
+		scene->unstable_cube.pos =
+			Vector3Add(scene->unstable_cube.pos, scene->player->last_movement);
+	}
+
+	if (scene->removed_interaction_cube == 0 && collision_AABB(&scene->player->collision_cube, &scene->interaction_cube)) {
 		scene->interaction_cube.pos =
 			Vector3Add(scene->interaction_cube.pos, scene->player->last_movement);
 	}
 
-	if (plate_collision(&scene->interaction_cube, &scene->plate)) {
+	if (plate_collision(&scene->unstable_cube, &scene->plate) && scene->removed_interaction_cube) {
 		scene->plate.color = GREEN;
 		scene->can_draw_next_stage_plate = 1;
 	}
 	else {
 		scene->plate.color = RED;
 		scene->can_draw_next_stage_plate = 0;
+	}
+
+	if (collision_AABB(&scene->interaction_cube, &scene->unstable_cube)) {
+		scene->interaction_cube.color.a = 0;
+		scene->removed_interaction_cube = 1;
 	}
 
 	// Drawing
@@ -73,19 +93,42 @@ void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui) {
 	SetShaderValue(scene->custom_shader->shader, scene->custom_shader->shader.locs[SHADER_LOC_VECTOR_VIEW], scene->camera, SHADER_UNIFORM_VEC3);
 	UpdateLightValues(&scene->custom_shader->shader, &scene->custom_shader->light);
 
+	// Unstable cubes "eats" (or removes) other cubes and their colors vary a lot.
+	unsigned char r = rand() % UCHAR_MAX;
+	unsigned char g = rand() % UCHAR_MAX;
+	unsigned char b = rand() % UCHAR_MAX;
+
 	DrawCube(
-		scene->interaction_cube.pos,
-		scene->interaction_cube.width,
-		scene->interaction_cube.height,
-		scene->interaction_cube.length,
-		scene->interaction_cube.color);
+		scene->unstable_cube.pos,
+		scene->unstable_cube.width,
+		scene->unstable_cube.height,
+		scene->unstable_cube.length,
+		(Color) {
+		r, g, b, UCHAR_MAX
+	});
+
+	if (!scene->removed_interaction_cube) {
+		DrawCube(
+			scene->interaction_cube.pos,
+			scene->interaction_cube.width,
+			scene->interaction_cube.height,
+			scene->interaction_cube.length,
+			scene->interaction_cube.color);
+
+		DrawCubeWires(
+			scene->interaction_cube.pos,
+			scene->interaction_cube.width,
+			scene->interaction_cube.height,
+			scene->interaction_cube.length,
+			scene->interaction_cube.color);
+	}
 
 	DrawCube(
 		scene->plate.pos,
 		scene->plate.width,
 		scene->plate.height,
 		scene->plate.length,
-		scene->plate.color);
+		(Color) { r, g, b, UCHAR_MAX });
 
 	DrawModelEx(
 		scene->player->model,
@@ -110,20 +153,12 @@ void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui) {
 		scene->player->collision_cube.length,
 		BLACK);
 
-	DrawCubeWires(
-		scene->interaction_cube.pos,
-		scene->interaction_cube.width,
-		scene->interaction_cube.height,
-		scene->interaction_cube.length,
-		scene->interaction_cube.color);
-
 	if (scene->can_draw_next_stage_plate) {
-		ui->color.a = (int)floor(Lerp(ui->color.a, 255, 0.1f));
-		scene->next_stage_plate.color.a = 
+		scene->next_stage_plate.color.a =
 			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
 	}
 	else {
-		scene->next_stage_plate.color.a = 
+		scene->next_stage_plate.color.a =
 			(int)floor(Lerp(scene->next_stage_plate.color.a, 0, 0.1f));
 	}
 
@@ -136,20 +171,6 @@ void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui) {
 
 	EndMode3D();
 
-	if (!scene->can_draw_next_stage_plate) {
-		if (GetTime() - scene->creation_time < 4.0f) {
-			ui->color.a = (int)floor(Lerp(ui->color.a, 255, 0.1f));
-		}
-		else {
-			ui->color.a = (int)floor(Lerp(ui->color.a, 0, 0.1f));
-		}
-
-		UiDrawText(ui, "CONTROLS: ARROWS OR WASD", (Vector2) { WIDTH / 2, HEIGHT / 8 }, ui->color);
-		UiDrawText(ui, "PRESS R TO RESTART ANY STAGE", (Vector2) { WIDTH / 2, HEIGHT / 4 }, ui->color);
-	} else {
-		UiDrawText(ui, "GET TO THE LIT SQUARE.", (Vector2) { WIDTH / 2, HEIGHT / 4 }, ui->color);
-	}
-
 	if (scene->player->pos.x == scene->next_stage_plate.pos.x &&
 		scene->player->pos.z == scene->next_stage_plate.pos.z &&
 		scene->can_draw_next_stage_plate) {
@@ -157,7 +178,7 @@ void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui) {
 	}
 }
 
-FirstStageScene* ResetFirstStageScene(FirstStageScene* scene) {
+SixthStageScene* ResetSixthStageScene(SixthStageScene* scene) {
 	FreeScene((Scene**)&scene);
-	return CreateFirstStageScene(scene);
+	return CreateSixthStageScene(scene);
 }
