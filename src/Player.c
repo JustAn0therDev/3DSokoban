@@ -23,7 +23,7 @@ Player* CreatePlayer() {
 	player->last_movement_time = 1;
 
 	player->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture = 
-		LoadTexture("Assets/Textures/Chess_Board.png");
+		LoadTexture("Assets/Textures/stacked-stones.png");
 
     player->texture_ptr = &player->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture;
 
@@ -38,34 +38,36 @@ Player* CreatePlayer() {
 	return player;
 }
 
-void UpdatePlayer(Player* player) {
+void UpdatePlayer(Player* player, int can_move) {
 	player->last_movement = (Vector3){ 0 };
 
-	if (GetTime() - player->last_movement_time > 0.15f) {
-		// Movement
-		if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
-			player->pos.z--;
-			player->last_movement.z = -player->movement_speed;
-			player->rotation_angle = 90.0f;
-		}
-		else if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
-			player->pos.x--;
-			player->last_movement.x = -player->movement_speed;
-			player->rotation_angle = 180.0f;
-		}
-		else if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
-			player->pos.x++;
-			player->last_movement.x = player->movement_speed;
-			player->rotation_angle = 0.0f;
-		}
-		else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
-			player->pos.z++;
-			player->last_movement.z = player->movement_speed;
-			player->rotation_angle = 270.0f;
-		}
+	if (can_move) {
+		if (GetTime() - player->last_movement_time > 0.15f) {
+			// Movement
+			if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
+				player->pos.z--;
+				player->last_movement.z = -player->movement_speed;
+				player->rotation_angle = 90.0f;
+			}
+			else if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
+				player->pos.x--;
+				player->last_movement.x = -player->movement_speed;
+				player->rotation_angle = 180.0f;
+			}
+			else if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
+				player->pos.x++;
+				player->last_movement.x = player->movement_speed;
+				player->rotation_angle = 0.0f;
+			}
+			else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
+				player->pos.z++;
+				player->last_movement.z = player->movement_speed;
+				player->rotation_angle = 270.0f;
+			}
 
-		if (player->last_movement.z != 0 || player->last_movement.x != 0) {
-			player->last_movement_time = GetTime();
+			if (player->last_movement.z != 0 || player->last_movement.x != 0) {
+				player->last_movement_time = GetTime();
+			}
 		}
 	}
 
@@ -77,11 +79,8 @@ void FreePlayer(Player* player) {
 		return;
 	}
 
+    UnloadTexture(*player->texture_ptr);
 	UnloadModel(player->model);
-
-    if (player->texture_ptr != 0) {
-        UnloadTexture(*player->texture_ptr);
-    }
 
 	free(player);
 }

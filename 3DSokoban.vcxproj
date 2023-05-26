@@ -71,6 +71,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -135,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src/EighthStageScene.c" />
     <ClCompile Include="src/Camera.c" />
     <ClCompile Include="src/CustomShader.c" />
     <ClCompile Include="src/Debug.c" />
@@ -146,6 +153,7 @@
     <ClCompile Include="src/SixthStageScene.c" />
     <ClCompile Include="src/TitleScene.c" />
     <ClCompile Include="src/Ui.c" />
+    <ClInclude Include="src/header_files/EighthStageScene.h" />
     <ClInclude Include="src/header_files/Debug.h" />
     <ClInclude Include="src/header_files/FifthStageScene.h" />
     <ClInclude Include="src/header_files/FourthStageScene.h" />

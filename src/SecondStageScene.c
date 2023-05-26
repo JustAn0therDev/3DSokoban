@@ -62,7 +62,7 @@ SecondStageScene* CreateSecondStageScene() {
 }
 
 void UpdateSecondStageScene(SecondStageScene* scene) {
-	UpdatePlayer(scene->player);
+	UpdatePlayer(scene->player, 1);
 	CustomUpdateCamera(scene->camera, scene->player->pos);
 
 	if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cubes[0])) {

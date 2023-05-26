@@ -61,7 +61,7 @@ ThirdStageScene* CreateThirdStageScene() {
 }
 
 void UpdateThirdStageScene(ThirdStageScene* scene) {
-	UpdatePlayer(scene->player);
+	UpdatePlayer(scene->player, 1);
 	CustomUpdateCamera(scene->camera, scene->player->pos);
 
 	// Checking interaction cubes.

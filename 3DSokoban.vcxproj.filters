@@ -15,111 +15,117 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.c">
+    <ClCompile Include="src/Camera.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Physics.c">
+    <ClCompile Include="src/CustomShader.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Player.c">
+    <ClCompile Include="src/Debug.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.c">
+    <ClCompile Include="src/FifthStageScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="FirstStageScene.c">
+    <ClCompile Include="src/FirstStageScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Stageboard.c">
+    <ClCompile Include="src/FourthStageScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="SecondStageScene.c">
+    <ClCompile Include="src/Scene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdStageScene.c">
+    <ClCompile Include="src/SeventhStageScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="FourthStageScene.c">
+    <ClCompile Include="src/SixthStageScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="FifthStageScene.c">
+    <ClCompile Include="src/TitleScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="TitleScene.c">
+    <ClCompile Include="src/Ui.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Debug.c">
+    <ClCompile Include="src/Player.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.c">
+    <ClCompile Include="src/Main.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="SixthStageScene.c">
+    <ClCompile Include="src/Physics.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="SeventhStageScene.c">
+    <ClCompile Include="src/SecondStageScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Ui.c">
+    <ClCompile Include="src/Stageboard.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="CustomShader.c">
+    <ClCompile Include="src/ThirdStageScene.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="EighthStageScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Physics.h">
+    <ClInclude Include="src/header_files/Debug.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="GameGeometry.h">
+    <ClInclude Include="src/header_files/FifthStageScene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="src/header_files/FourthStageScene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="src/header_files/Scene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="FirstStageScene.h">
+    <ClInclude Include="src/header_files/SeventhStageScene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Macros.h">
+    <ClInclude Include="src/header_files/CustomShader.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Stageboard.h">
+    <ClInclude Include="src/header_files/SixthStageScene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="SecondStageScene.h">
+    <ClInclude Include="src/header_files/TitleScene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdStageScene.h">
+    <ClInclude Include="src/header_files/Ui.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="FourthStageScene.h">
+    <ClInclude Include="src/header_files/Camera.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="FifthStageScene.h">
+    <ClInclude Include="src/header_files/FirstStageScene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="TitleScene.h">
+    <ClInclude Include="src/header_files/Macros.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Debug.h">
+    <ClInclude Include="src/header_files/Player.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="src/header_files/GameGeometry.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="SixthStageScene.h">
+    <ClInclude Include="src/header_files/Physics.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="SeventhStageScene.h">
+    <ClInclude Include="src/header_files/SecondStageScene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Ui.h">
+    <ClInclude Include="src/header_files/Stageboard.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="CustomShader.h">
+    <ClInclude Include="src/header_files/ThirdStageScene.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="EighthStageScene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

@@ -17,6 +17,6 @@ typedef struct player {
 
 Player* CreatePlayer();
 
-void UpdatePlayer(Player* player);
+void UpdatePlayer(Player* player, int can_move);
 
 void FreePlayer(Player* player);

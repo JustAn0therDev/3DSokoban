@@ -48,7 +48,7 @@ FirstStageScene* CreateFirstStageScene() {
 }
 
 void UpdateFirstStageScene(FirstStageScene* scene, Ui* ui) {
-	UpdatePlayer(scene->player);
+	UpdatePlayer(scene->player, 1);
 	CustomUpdateCamera(scene->camera, scene->player->pos);
 
 	if (collision_AABB(&scene->player->collision_cube, &scene->interaction_cube)) {

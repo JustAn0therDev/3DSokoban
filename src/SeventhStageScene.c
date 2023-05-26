@@ -145,7 +145,7 @@ SeventhStageScene* CreateSeventhStageScene() {
 }
 
 void UpdateSeventhStageScene(SeventhStageScene* scene) {
-	UpdatePlayer(scene->player);
+	UpdatePlayer(scene->player, 1);
 	CustomUpdateCamera(scene->camera, scene->player->pos);
 
 	int object_can_move[2] = { 1, 1 };

@@ -58,7 +58,7 @@ SixthStageScene* CreateSixthStageScene() {
 }
 
 void UpdateSixthStageScene(SixthStageScene* scene) {
-	UpdatePlayer(scene->player);
+	UpdatePlayer(scene->player, 1);
 	CustomUpdateCamera(scene->camera, scene->player->pos);
 
 	if (collision_AABB(&scene->player->collision_cube, &scene->unstable_cube)) {
