@@ -45,6 +45,7 @@ EighthStageScene* CreateEighthStageScene() {
 	scene->player_two_toggle = 0;
 
 	scene->creation_time = (int)GetTime();
+    scene->selection_position = (Vector3){ 0.0f, 0.0f, 0.0f };
 
 	return scene;
 }
@@ -153,15 +154,23 @@ void UpdateEighthStageScene(EighthStageScene* scene, Ui* ui) {
 		WHITE);
 
     if (scene->player_one_toggle) {
+        scene->selection_position.x = Lerp(scene->selection_position.x, scene->player->pos.x, 0.1f);
+        scene->selection_position.y = Lerp(scene->selection_position.y, scene->player->pos.y, 0.1f);
+        scene->selection_position.z = Lerp(scene->selection_position.z, scene->player->pos.z, 0.1f);
+
         DrawCubeWires(
-            scene->player->collision_cube.pos,
+            scene->selection_position,
             scene->player->collision_cube.width,
             scene->player->collision_cube.height,
             scene->player->collision_cube.length,
             BLACK);
     } else {
+        scene->selection_position.x = Lerp(scene->selection_position.x, scene->player_two->pos.x, 0.1f);
+        scene->selection_position.y = Lerp(scene->selection_position.y, scene->player_two->pos.y, 0.1f);
+        scene->selection_position.z = Lerp(scene->selection_position.z, scene->player_two->pos.z, 0.1f);
+
         DrawCubeWires(
-            scene->player_two->collision_cube.pos,
+            scene->selection_position,
             scene->player_two->collision_cube.width,
             scene->player_two->collision_cube.height,
             scene->player_two->collision_cube.length,

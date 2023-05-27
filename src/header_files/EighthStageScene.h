@@ -21,6 +21,7 @@ typedef struct eighth_stage_scene {
 	int player_one_toggle;
 	int player_two_toggle;
 	int creation_time;
+    Vector3 selection_position;
 } EighthStageScene;
 
 EighthStageScene* CreateEighthStageScene();
