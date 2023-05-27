@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <raylib.h>
 
-Player* CreatePlayer() {
+Player* CreatePlayer(int player_number) {
 	Player* player = malloc(sizeof(Player));
 
 	if (player == 0) {
@@ -22,9 +22,18 @@ Player* CreatePlayer() {
 	player->last_movement = (Vector3){ 0 };
 	player->last_movement_time = 1;
 
-	player->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture = 
-		LoadTexture("Assets/Textures/stacked-stones.png");
+    Texture texture = { 0 };
 
+    if (player_number == 1) {
+        texture = LoadTexture("Assets/Textures/stacked-stones.png");
+    } else if (player_number == 2) {
+        texture = LoadTexture("Assets/Textures/Solid_white.png");
+    } else {
+        printf("Player number %d not found.\n", player_number);
+        exit(1);
+    }
+
+    player->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture = texture;
     player->texture_ptr = &player->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture;
 
 	player->collision_cube = (Cube){

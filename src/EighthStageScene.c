@@ -21,8 +21,8 @@ EighthStageScene* CreateEighthStageScene() {
 		exit(1);
 	}
 
-	scene->player = CreatePlayer();
-	scene->player_two = CreatePlayer();
+	scene->player = CreatePlayer(1);
+	scene->player_two = CreatePlayer(2);
 	scene->player_two->pos = (Vector3){ 0.0f, 0.0f, 6.0f };
 	scene->camera = CreateCamera();
 

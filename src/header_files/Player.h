@@ -15,7 +15,7 @@ typedef struct player {
 	double last_movement_time;
 } Player;
 
-Player* CreatePlayer();
+Player* CreatePlayer(int player_number);
 
 void UpdatePlayer(Player* player, int can_move);
 

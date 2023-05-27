@@ -16,7 +16,7 @@ TitleScene* CreateTitleScene()
 		exit(1);
 	}
 
-	titlescene->player = CreatePlayer();
+	titlescene->player = CreatePlayer(1);
 	titlescene->camera = CreateCamera();
 	titlescene->stageboard = CreateStageboard();
 

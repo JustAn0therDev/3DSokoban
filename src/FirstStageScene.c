@@ -20,7 +20,7 @@ FirstStageScene* CreateFirstStageScene() {
 		exit(1);
 	}
 
-	scene->player = CreatePlayer();
+	scene->player = CreatePlayer(1);
 	scene->camera = CreateCamera();
 
 	scene->interaction_cube = (Cube){
