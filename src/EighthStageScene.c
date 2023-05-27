@@ -152,22 +152,21 @@ void UpdateEighthStageScene(EighthStageScene* scene, Ui* ui) {
 		scene->player_two->scale,
 		WHITE);
 
-	if (scene->player_one_toggle) {
-		DrawCubeWires(
-			scene->player->collision_cube.pos,
-			scene->player->collision_cube.width,
-			scene->player->collision_cube.height,
-			scene->player->collision_cube.length,
-			BLACK);
-	}
-	else {
-		DrawCubeWires(
-			scene->player_two->collision_cube.pos,
-			scene->player_two->collision_cube.width,
-			scene->player_two->collision_cube.height,
-			scene->player_two->collision_cube.length,
-			BLACK);
-	}
+    if (scene->player_one_toggle) {
+        DrawCubeWires(
+            scene->player->collision_cube.pos,
+            scene->player->collision_cube.width,
+            scene->player->collision_cube.height,
+            scene->player->collision_cube.length,
+            BLACK);
+    } else {
+        DrawCubeWires(
+            scene->player_two->collision_cube.pos,
+            scene->player_two->collision_cube.width,
+            scene->player_two->collision_cube.height,
+            scene->player_two->collision_cube.length,
+            BLACK);
+    }
 
 	DrawModelEx(
 		scene->stageboard->model,
@@ -206,7 +205,9 @@ void UpdateEighthStageScene(EighthStageScene* scene, Ui* ui) {
 		UiDrawText(ui, "PRESS F TO SWITCH CHARACTERS", (Vector2) { WIDTH / 2, HEIGHT / 8 }, ui->color);
 	} else {
         ui->color.a = (int)floor(Lerp(ui->color.a, 255, 0.1f));
-		UiDrawText(ui, "MOVE THE BLACK CHARACTER TO THE LIT SQUARE", (Vector2) { WIDTH / 2, HEIGHT / 8 }, ui->color);
+
+        // TODO: this message should be more clear about which one of the characters is the first.
+		UiDrawText(ui, "MOVE THE FIRST CHARACTER TO THE LIT SQUARE", (Vector2) { WIDTH / 2, HEIGHT / 8 }, ui->color);
     }
 
 	if (scene->player->pos.x == scene->next_stage_plate.pos.x &&
