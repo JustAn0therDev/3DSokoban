@@ -17,7 +17,7 @@ Stageboard* CreateStageboard() {
 	stageboard->width = 2.0f;
 	stageboard->length = 2.0f;
 	stageboard->model = LoadModel("Assets/Models/Board.obj");
-	stageboard->color = DARKGRAY;
+	stageboard->color = WHITE;
 	stageboard->rotation_angle = 0.0f;
 	stageboard->rotation_axis = (Vector3){ 0.0f, 1.0f, 0.0f };
 	
