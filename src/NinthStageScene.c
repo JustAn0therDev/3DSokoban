@@ -1,17 +1,17 @@
-#include "header_files/NinthStageScene.h"
-#include "header_files/Player.h"
 #include "header_files/Camera.h"
+#include "header_files/CustomShader.h"
 #include "header_files/GameGeometry.h"
+#include "header_files/Macros.h"
+#include "header_files/NinthStageScene.h"
+#include "header_files/Physics.h"
+#include "header_files/Player.h"
+#include "header_files/Scene.h"
+#include "header_files/Stageboard.h"
+#include "header_files/Ui.h"
 #include <raylib.h>
 #include <raymath.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include "header_files/Macros.h"
-#include "header_files/Stageboard.h"
-#include "header_files/CustomShader.h"
-#include "header_files/Physics.h"
-#include "header_files/Scene.h"
-#include "header_files/Ui.h"
+#include <stdlib.h>
 
 NinthStageScene* CreateNinthStageScene() {
 	NinthStageScene* scene = malloc(sizeof(NinthStageScene));
@@ -69,7 +69,11 @@ void UpdateNinthStageScene(NinthStageScene* scene, Ui* ui) {
 	UpdatePlayer(scene->player, scene->player_one_toggle);
 	UpdatePlayer(scene->player_two, scene->player_two_toggle);
 
-	CustomUpdateCamera(scene->camera, scene->player->pos);
+    if (scene->player_one_toggle) {
+        CustomUpdateCamera(scene->camera, scene->player->pos);
+    } else {
+        CustomUpdateCamera(scene->camera, scene->player_two->pos);
+    }
 
     scene->can_draw_next_stage_plate = 1;
 

@@ -44,6 +44,10 @@ int GetChosenSceneByNumberKey() {
 		return 9;
 	}
 
+    if (IsKeyReleased(KEY_KP_9)) {
+        return 10;
+    }
+
 	return -1;
 }
 

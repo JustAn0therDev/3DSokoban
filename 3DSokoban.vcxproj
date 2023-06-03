@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src/TenthStageScene.c" />
     <ClCompile Include="src/EighthStageScene.c" />
     <ClCompile Include="src/NinthStageScene.c" />
     <ClCompile Include="src/Camera.c" />
@@ -171,6 +172,7 @@
     <ClInclude Include="src/header_files/TitleScene.h" />
     <ClInclude Include="src/header_files/Ui.h" />
     <ClInclude Include="src/header_files/NinthStageScene.h" />
+    <ClInclude Include="src/header_files/TenthStageScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src/header_files/Camera.h" />
