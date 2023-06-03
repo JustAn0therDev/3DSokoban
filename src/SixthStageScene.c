@@ -53,6 +53,7 @@ SixthStageScene* CreateSixthStageScene() {
 
 	scene->player->model.materials[0].shader = scene->custom_shader->shader;
 	scene->stageboard->model.materials[0].shader = scene->custom_shader->shader;
+    scene->set_easter_egg = 0;
 
 	return scene;
 }
@@ -60,6 +61,18 @@ SixthStageScene* CreateSixthStageScene() {
 void UpdateSixthStageScene(SixthStageScene* scene) {
 	UpdatePlayer(scene->player, 1);
 	CustomUpdateCamera(scene->camera, scene->player->pos);
+
+    if (IsKeyPressed(KEY_O)) {
+        UnloadTexture(*scene->stageboard->texture_ptr);
+
+        scene->stageboard->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture =
+            LoadTexture("Assets/Images/SinCity.png");
+
+        scene->stageboard->texture_ptr = 
+            &scene->stageboard->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture;
+
+        scene->set_easter_egg = 1;
+    }
 
 	if (collision_AABB(&scene->player->collision_cube, &scene->unstable_cube)) {
 		scene->unstable_cube.pos =
@@ -138,13 +151,23 @@ void UpdateSixthStageScene(SixthStageScene* scene) {
 		scene->player->scale,
 		WHITE);
 
-	DrawModelEx(
-		scene->stageboard->model,
-		scene->stageboard->pos,
-		scene->stageboard->rotation_axis,
-		scene->stageboard->rotation_angle,
-		scene->stageboard->scale,
-		scene->stageboard->color);
+    if (!scene->set_easter_egg) {
+        DrawModelEx(
+            scene->stageboard->model,
+            scene->stageboard->pos,
+            scene->stageboard->rotation_axis,
+            scene->stageboard->rotation_angle,
+            scene->stageboard->scale,
+            scene->stageboard->color);
+    } else {
+        DrawModelEx(
+            scene->stageboard->model,
+            scene->stageboard->pos,
+            scene->stageboard->rotation_axis,
+            90.0f, // rotation axis
+            scene->stageboard->scale,
+            scene->stageboard->color);
+    }
 
 	if (scene->can_draw_next_stage_plate) {
 		scene->next_stage_plate.color.a =

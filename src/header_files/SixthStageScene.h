@@ -17,6 +17,7 @@ typedef struct sixth_stage_scene {
 	int can_draw_next_stage_plate;
 	int finished_stage;
 	int removed_interaction_cube;
+    int set_easter_egg;
 } SixthStageScene;
 
 SixthStageScene* CreateSixthStageScene();
