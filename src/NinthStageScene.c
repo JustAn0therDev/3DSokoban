@@ -50,6 +50,9 @@ NinthStageScene* CreateNinthStageScene() {
 
     scene->has_fused_cube = 0;
 
+	scene->played_puzzle_solved_audio = 0;
+	scene->puzzle_solved_audio = LoadSound("Assets/Audios/Puzzle Solved.wav");
+
 	return scene;
 }
 
@@ -203,6 +206,11 @@ void UpdateNinthStageScene(NinthStageScene* scene, Ui* ui) {
 		scene->stageboard->color);
 
 	if (scene->can_draw_next_stage_plate) {
+		if (!scene->played_puzzle_solved_audio) {
+			scene->played_puzzle_solved_audio = 1;
+			PlaySound(scene->puzzle_solved_audio);
+		}
+
 		scene->next_stage_plate.color.a =
 			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
 	}
@@ -228,6 +236,7 @@ void UpdateNinthStageScene(NinthStageScene* scene, Ui* ui) {
 }
 
 NinthStageScene* ResetNinthStageScene(NinthStageScene* scene) {
+	UnloadSound(scene->puzzle_solved_audio);
 	FreePlayer(scene->player_two);
 	FreeScene((Scene**)&scene);
 	return CreateNinthStageScene(scene);

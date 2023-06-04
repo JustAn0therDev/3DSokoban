@@ -24,6 +24,8 @@ typedef struct ninth_stage_scene {
 	int player_two_toggle;
 	int creation_time;
     Vector3 selection_position;
+	int played_puzzle_solved_audio;
+	Sound puzzle_solved_audio;
 } NinthStageScene;
 
 NinthStageScene* CreateNinthStageScene();

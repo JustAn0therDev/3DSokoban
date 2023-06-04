@@ -18,6 +18,8 @@ typedef struct fifth_stage_scene {
 	int finished_stage;
 	int mirrored_cubes_amount;
 	int activated_all_plates;
+	int played_puzzle_solved_audio;
+	Sound puzzle_solved_audio;
 } FifthStageScene;
 
 FifthStageScene* CreateFifthStageScene();

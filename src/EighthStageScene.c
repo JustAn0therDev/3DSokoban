@@ -47,6 +47,9 @@ EighthStageScene* CreateEighthStageScene() {
 	scene->creation_time = (int)GetTime();
     scene->selection_position = (Vector3){ 0.0f, 0.0f, 0.0f };
 
+	scene->played_puzzle_solved_audio = 0;
+	scene->puzzle_solved_audio = LoadSound("Assets/Audios/Puzzle Solved.wav");
+
 	return scene;
 }
 
@@ -66,7 +69,12 @@ void UpdateEighthStageScene(EighthStageScene* scene, Ui* ui) {
 	UpdatePlayer(scene->player, scene->player_one_toggle);
 	UpdatePlayer(scene->player_two, scene->player_two_toggle);
 
-	CustomUpdateCamera(scene->camera, scene->player->pos);
+	if (scene->player_one_toggle) {
+		CustomUpdateCamera(scene->camera, scene->player->pos);
+	}
+	else {
+		CustomUpdateCamera(scene->camera, scene->player_two->pos);
+	}
 
     scene->can_draw_next_stage_plate = 1;
 
@@ -215,6 +223,11 @@ void UpdateEighthStageScene(EighthStageScene* scene, Ui* ui) {
 	} else {
         ui->color.a = (int)floor(Lerp(ui->color.a, 255, 0.1f));
 
+		if (!scene->played_puzzle_solved_audio) {
+			scene->played_puzzle_solved_audio = 1;
+			PlaySound(scene->puzzle_solved_audio);
+		}
+
         // TODO: this message should be more clear about which one of the characters is the first.
 		UiDrawText(ui, "MOVE THE FIRST CHARACTER TO THE LIT SQUARE", (Vector2) { WIDTH / 2, HEIGHT / 8 }, ui->color);
     }
@@ -227,6 +240,7 @@ void UpdateEighthStageScene(EighthStageScene* scene, Ui* ui) {
 }
 
 EighthStageScene* ResetEighthStageScene(EighthStageScene* scene) {
+	UnloadSound(scene->puzzle_solved_audio);
 	FreePlayer(scene->player_two);
 	FreeScene((Scene**)&scene);
 	return CreateEighthStageScene(scene);

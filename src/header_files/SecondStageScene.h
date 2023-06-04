@@ -16,6 +16,8 @@ typedef struct second_stage_scene {
 	int can_draw_next_stage_plate;
 	int finished_stage;
 	int plates_amount;
+	int played_puzzle_solved_audio;
+	Sound puzzle_solved_audio;
 } SecondStageScene;
 
 SecondStageScene* CreateSecondStageScene();

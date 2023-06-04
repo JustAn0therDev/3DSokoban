@@ -16,6 +16,8 @@ typedef struct third_stage_scene {
 	int can_draw_next_stage_plate;
 	int finished_stage;
 	int stacked_cubes;
+	int played_puzzle_solved_audio;
+	Sound puzzle_solved_audio;
 } ThirdStageScene;
 
 ThirdStageScene* CreateThirdStageScene();

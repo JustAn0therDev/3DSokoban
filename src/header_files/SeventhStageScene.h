@@ -19,6 +19,8 @@ typedef struct seventh_stage_scene {
 	int finished_stage;
 	int removed_mirrored_cubes[2];
 	int amount_of_unstable_cubes;
+	int played_puzzle_solved_audio;
+	Sound puzzle_solved_audio;
 } SeventhStageScene;
 
 SeventhStageScene* CreateSeventhStageScene();

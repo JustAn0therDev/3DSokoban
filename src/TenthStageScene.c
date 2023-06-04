@@ -52,6 +52,9 @@ TenthStageScene* CreateTenthStageScene() {
 	scene->creation_time = (int)GetTime();
     scene->selection_position = (Vector3){ 0.0f, 0.0f, 0.0f };
 
+	scene->played_puzzle_solved_audio = 0;
+	scene->puzzle_solved_audio = LoadSound("Assets/Audios/Puzzle Solved.wav");
+
 	return scene;
 }
 
@@ -250,6 +253,11 @@ void UpdateTenthStageScene(TenthStageScene* scene, Ui* ui) {
 		scene->stageboard->color);
 
 	if (scene->can_draw_next_stage_plate) {
+		if (!scene->played_puzzle_solved_audio) {
+			scene->played_puzzle_solved_audio = 1;
+			PlaySound(scene->puzzle_solved_audio);
+		}
+
 		scene->next_stage_plate.color.a =
 			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
 	}
@@ -275,6 +283,7 @@ void UpdateTenthStageScene(TenthStageScene* scene, Ui* ui) {
 }
 
 TenthStageScene* ResetTenthStageScene(TenthStageScene* scene) {
+	UnloadSound(scene->puzzle_solved_audio);
 	FreePlayer(scene->player_two);
 	FreeScene((Scene**)&scene);
 	return CreateTenthStageScene(scene);

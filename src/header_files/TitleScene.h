@@ -10,6 +10,7 @@ typedef struct TitleScene {
 	Camera* camera;
 	CustomShader* custom_shader;
 	float rotation_speed;
+    Sound sound;
 } TitleScene;
 
 TitleScene* CreateTitleScene();

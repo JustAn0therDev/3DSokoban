@@ -71,6 +71,9 @@ FifthStageScene* CreateFifthStageScene() {
 	scene->player->model.materials[0].shader = scene->custom_shader->shader;
 	scene->stageboard->model.materials[0].shader = scene->custom_shader->shader;
 
+	scene->played_puzzle_solved_audio = 0;
+	scene->puzzle_solved_audio = LoadSound("Assets/Audios/Puzzle Solved.wav");
+
 	return scene;
 }
 
@@ -202,6 +205,11 @@ void UpdateFifthStageScene(FifthStageScene* scene) {
 		scene->stageboard->color);
 
 	if (scene->can_draw_next_stage_plate) {
+		if (!scene->played_puzzle_solved_audio) {
+			scene->played_puzzle_solved_audio = 1;
+			PlaySound(scene->puzzle_solved_audio);
+		}
+
 		scene->next_stage_plate.color.a =
 			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
 	}
@@ -227,6 +235,7 @@ void UpdateFifthStageScene(FifthStageScene* scene) {
 }
 
 FifthStageScene* ResetFifthStageScene(FifthStageScene* scene) {
+	UnloadSound(scene->puzzle_solved_audio);
 	FreeScene((Scene**)&scene);
 	return CreateFifthStageScene(scene);
 }

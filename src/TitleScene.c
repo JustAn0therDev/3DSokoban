@@ -31,6 +31,9 @@ TitleScene* CreateTitleScene()
 	titlescene->player->model.materials[0].shader = titlescene->custom_shader->shader;
 	titlescene->stageboard->model.materials[0].shader = titlescene->custom_shader->shader;
 
+    titlescene->sound = LoadSound("Assets/Audios/Mutsu.wav");
+    PlaySound(titlescene->sound);
+
 	return titlescene;
 }
 
@@ -39,6 +42,9 @@ void FreeTitleScene(TitleScene* titlescene)
 	FreeCustomShader(titlescene->custom_shader);
 	FreePlayer(titlescene->player);
 	FreeStageboard(titlescene->stageboard);
+
+    StopSound(titlescene->sound);
+
 	free(titlescene);
 }
 

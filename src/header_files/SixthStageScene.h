@@ -18,6 +18,9 @@ typedef struct sixth_stage_scene {
 	int finished_stage;
 	int removed_interaction_cube;
     int set_easter_egg;
+	int played_puzzle_solved_audio;
+	Sound puzzle_solved_audio;
+	Sound sin_city_audio;
 } SixthStageScene;
 
 SixthStageScene* CreateSixthStageScene();

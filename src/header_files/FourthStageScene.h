@@ -20,6 +20,8 @@ typedef struct fourth_stage_scene {
 	int stacked_cubes;
 	int activated_heavy_plate;
 	int activated_normal_plate;
+	int played_puzzle_solved_audio;
+	Sound puzzle_solved_audio;
 } FourthStageScene;
 
 FourthStageScene* CreateFourthStageScene();

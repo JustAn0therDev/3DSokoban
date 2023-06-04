@@ -29,7 +29,7 @@
 int main(void) {
 	InitWindow(WIDTH, HEIGHT, "Sokoban");
 	
-	SetTargetFPS(165);
+	SetTargetFPS(60);
 
 	int chosen_scene = 0;
 
@@ -40,6 +40,13 @@ int main(void) {
 #endif
 
 	Ui* ui = CreateUi();
+
+	InitAudioDevice();
+
+	SetMasterVolume(0.2f);
+
+	Sound main_theme_sound = LoadSound("Assets/Audios/Stickerbush Symphony.mp3");
+
 	TitleScene* titlescene = CreateTitleScene();
 	FirstStageScene* first_stage_scene = 0;
 	SecondStageScene* second_stage_scene = 0;
@@ -68,6 +75,7 @@ int main(void) {
 
 			if (IsKeyPressed(KEY_ENTER)) {
 				FreeTitleScene(titlescene);
+				PlaySound(main_theme_sound);
 				titlescene = 0;
 				chosen_scene = 1;
 			}
@@ -311,6 +319,8 @@ int main(void) {
 	}
 
 	FreeUi(ui);
+	UnloadSound(main_theme_sound);
+	CloseAudioDevice();
 
 	return 0;
 }
