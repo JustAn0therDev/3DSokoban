@@ -66,7 +66,13 @@
     <ClCompile Include="src/ThirdStageScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="EighthStageScene.c">
+    <ClCompile Include="src/TenthStageScene.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="src/EighthStageScene.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="src/NinthStageScene.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,7 +131,13 @@
     <ClInclude Include="src/header_files/ThirdStageScene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="EighthStageScene.h">
+    <ClInclude Include="src/header_files/EighthStageScene.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="src/header_files/NinthStageScene.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="src/header_files/TenthStageScene.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
