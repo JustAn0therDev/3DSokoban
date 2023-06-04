@@ -24,5 +24,5 @@ typedef struct sixth_stage_scene {
 } SixthStageScene;
 
 SixthStageScene* CreateSixthStageScene();
-void UpdateSixthStageScene(SixthStageScene* scene);
+void UpdateSixthStageScene(SixthStageScene* scene, Sound* main_theme_sound);
 SixthStageScene* ResetSixthStageScene(SixthStageScene* scene);

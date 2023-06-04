@@ -62,12 +62,14 @@ SixthStageScene* CreateSixthStageScene() {
 	return scene;
 }
 
-void UpdateSixthStageScene(SixthStageScene* scene) {
+void UpdateSixthStageScene(SixthStageScene* scene, Sound* main_theme_sound) {
 	UpdatePlayer(scene->player, 1);
 	CustomUpdateCamera(scene->camera, scene->player->pos);
 
     if (IsKeyPressed(KEY_O)) {
-        UnloadTexture(*scene->stageboard->texture_ptr);
+		StopSound(*main_theme_sound);
+		
+		UnloadTexture(*scene->stageboard->texture_ptr);
 
         scene->stageboard->model.materials[0].maps[MATERIAL_MAP_ALBEDO].texture =
             LoadTexture("Assets/Images/SinCity.png");

@@ -165,7 +165,7 @@ int main(void) {
 				sixth_stage_scene = CreateSixthStageScene();
 			}
 
-			UpdateSixthStageScene(sixth_stage_scene);
+			UpdateSixthStageScene(sixth_stage_scene, &main_theme_sound);
 
 			if (sixth_stage_scene->finished_stage) {
 				FreeScene((Scene**)&sixth_stage_scene);
