@@ -231,7 +231,7 @@ int main(void) {
 
 			UpdateTenthStageScene(tenth_stage_scene, ui);
 
-			if (tenth_stage_scene->finished_stage) {
+			if (tenth_stage_scene->accepted_ending) {
 				FreeScene((Scene**)&tenth_stage_scene);
 				chosen_scene = -1;
 				break_game_loop = 1;

@@ -228,8 +228,7 @@ void UpdateEighthStageScene(EighthStageScene* scene, Ui* ui) {
 			PlaySound(scene->puzzle_solved_audio);
 		}
 
-        // TODO: this message should be more clear about which one of the characters is the first.
-		UiDrawText(ui, "MOVE THE FIRST CHARACTER TO THE LIT SQUARE", (Vector2) { WIDTH / 2, HEIGHT / 8 }, ui->color);
+		UiDrawText(ui, "MOVE THE DARK CHARACTER TO THE LIT SQUARE", (Vector2) { WIDTH / 2, HEIGHT / 8 }, ui->color);
     }
 
 	if (scene->player->pos.x == scene->next_stage_plate.pos.x &&

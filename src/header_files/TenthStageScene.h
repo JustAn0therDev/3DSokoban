@@ -27,6 +27,7 @@ typedef struct tenth_stage_scene {
     Vector3 selection_position;
 	int played_puzzle_solved_audio;
 	Sound puzzle_solved_audio;
+	int accepted_ending;
 } TenthStageScene;
 
 TenthStageScene* CreateTenthStageScene();

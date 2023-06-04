@@ -40,6 +40,7 @@ TenthStageScene* CreateTenthStageScene() {
 	scene->next_stage_plate = (Cube){ (Vector3) { 0.0f, -1.0f, 0.0f }, 2, 0, 2, (Color) { 0, 255, 0, 0 } };
 	scene->can_draw_next_stage_plate = 0;
 	scene->finished_stage = 0;
+	scene->accepted_ending = 0;
 	scene->stageboard = CreateStageboard();
 	scene->custom_shader = CreateCustomShader();
 
@@ -141,144 +142,155 @@ void UpdateTenthStageScene(TenthStageScene* scene, Ui* ui) {
     }
 
 	// Drawing
-	ClearBackground(SKYBLUE);
-
-	BeginMode3D(*scene->camera);
-
-	SetShaderValue(scene->custom_shader->shader, scene->custom_shader->shader.locs[SHADER_LOC_VECTOR_VIEW], scene->camera, SHADER_UNIFORM_VEC3);
-	UpdateLightValues(&scene->custom_shader->shader, &scene->custom_shader->light);
-
-    DrawCube(
-        scene->cube_player_one.pos,
-        scene->cube_player_one.width,
-        scene->cube_player_one.height,
-        scene->cube_player_one.length,
-        scene->cube_player_one.color);
-
-    DrawCube(
-        scene->cube_player_two.pos,
-        scene->cube_player_two.width,
-        scene->cube_player_two.height,
-        scene->cube_player_two.length,
-        scene->cube_player_two.color);
-
-    DrawCube(
-        scene->mirrored_cube_player_one.pos,
-        scene->mirrored_cube_player_one.width,
-        scene->mirrored_cube_player_one.height,
-        scene->mirrored_cube_player_one.length,
-        scene->mirrored_cube_player_one.color);
-
-    DrawCube(
-        scene->mirrored_cube_player_two.pos,
-        scene->mirrored_cube_player_two.width,
-        scene->mirrored_cube_player_two.height,
-        scene->mirrored_cube_player_two.length,
-        scene->mirrored_cube_player_two.color);
-
-	DrawCube(
-		scene->plates_player_one[0].pos,
-		scene->plates_player_one[0].width,
-		scene->plates_player_one[0].height,
-		scene->plates_player_one[0].length,
-		scene->plates_player_one[0].color);
-
-	DrawCube(
-		scene->plates_player_one[1].pos,
-		scene->plates_player_one[1].width,
-		scene->plates_player_one[1].height,
-		scene->plates_player_one[1].length,
-		scene->plates_player_one[1].color);
-
-	DrawCube(
-		scene->plates_player_two[0].pos,
-		scene->plates_player_two[0].width,
-		scene->plates_player_two[0].height,
-		scene->plates_player_two[0].length,
-		scene->plates_player_two[0].color);
-
-	DrawCube(
-		scene->plates_player_two[1].pos,
-		scene->plates_player_two[1].width,
-		scene->plates_player_two[1].height,
-		scene->plates_player_two[1].length,
-		scene->plates_player_two[1].color);
-
-	DrawModelEx(
-		scene->player->model,
-		scene->player->pos,
-		scene->player->rotation_axis,
-		scene->player->rotation_angle,
-		scene->player->scale,
-		WHITE);
-
-	DrawModelEx(
-		scene->player_two->model,
-		scene->player_two->pos,
-		scene->player_two->rotation_axis,
-		scene->player_two->rotation_angle,
-		scene->player_two->scale,
-		WHITE);
-
-    if (scene->player_one_toggle) {
-        scene->selection_position.x = Lerp(scene->selection_position.x, scene->player->pos.x, 0.1f);
-        scene->selection_position.y = Lerp(scene->selection_position.y, scene->player->pos.y, 0.1f);
-        scene->selection_position.z = Lerp(scene->selection_position.z, scene->player->pos.z, 0.1f);
-
-        DrawCubeWires(
-            scene->selection_position,
-            scene->player->collision_cube.width,
-            scene->player->collision_cube.height,
-            scene->player->collision_cube.length,
-            BLACK);
-    } else {
-        scene->selection_position.x = Lerp(scene->selection_position.x, scene->player_two->pos.x, 0.1f);
-        scene->selection_position.y = Lerp(scene->selection_position.y, scene->player_two->pos.y, 0.1f);
-        scene->selection_position.z = Lerp(scene->selection_position.z, scene->player_two->pos.z, 0.1f);
-
-        DrawCubeWires(
-            scene->selection_position,
-            scene->player_two->collision_cube.width,
-            scene->player_two->collision_cube.height,
-            scene->player_two->collision_cube.length,
-            BLACK);
-    }
-
-	DrawModelEx(
-		scene->stageboard->model,
-		scene->stageboard->pos,
-		scene->stageboard->rotation_axis,
-		scene->stageboard->rotation_angle,
-		scene->stageboard->scale,
-		scene->stageboard->color);
-
-	if (scene->can_draw_next_stage_plate) {
-		if (!scene->played_puzzle_solved_audio) {
-			scene->played_puzzle_solved_audio = 1;
-			PlaySound(scene->puzzle_solved_audio);
-		}
-
-		scene->next_stage_plate.color.a =
-			(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
+	if (scene->finished_stage) {
+		ClearBackground(BLACK);
 	}
 	else {
-		scene->next_stage_plate.color.a =
-			(int)floor(Lerp(scene->next_stage_plate.color.a, 0, 0.1f));
+		ClearBackground(SKYBLUE);
+
+		BeginMode3D(*scene->camera);
+
+		SetShaderValue(scene->custom_shader->shader, scene->custom_shader->shader.locs[SHADER_LOC_VECTOR_VIEW], scene->camera, SHADER_UNIFORM_VEC3);
+		UpdateLightValues(&scene->custom_shader->shader, &scene->custom_shader->light);
+
+		DrawCube(
+			scene->cube_player_one.pos,
+			scene->cube_player_one.width,
+			scene->cube_player_one.height,
+			scene->cube_player_one.length,
+			scene->cube_player_one.color);
+
+		DrawCube(
+			scene->cube_player_two.pos,
+			scene->cube_player_two.width,
+			scene->cube_player_two.height,
+			scene->cube_player_two.length,
+			scene->cube_player_two.color);
+
+		DrawCube(
+			scene->mirrored_cube_player_one.pos,
+			scene->mirrored_cube_player_one.width,
+			scene->mirrored_cube_player_one.height,
+			scene->mirrored_cube_player_one.length,
+			scene->mirrored_cube_player_one.color);
+
+		DrawCube(
+			scene->mirrored_cube_player_two.pos,
+			scene->mirrored_cube_player_two.width,
+			scene->mirrored_cube_player_two.height,
+			scene->mirrored_cube_player_two.length,
+			scene->mirrored_cube_player_two.color);
+
+		DrawCube(
+			scene->plates_player_one[0].pos,
+			scene->plates_player_one[0].width,
+			scene->plates_player_one[0].height,
+			scene->plates_player_one[0].length,
+			scene->plates_player_one[0].color);
+
+		DrawCube(
+			scene->plates_player_one[1].pos,
+			scene->plates_player_one[1].width,
+			scene->plates_player_one[1].height,
+			scene->plates_player_one[1].length,
+			scene->plates_player_one[1].color);
+
+		DrawCube(
+			scene->plates_player_two[0].pos,
+			scene->plates_player_two[0].width,
+			scene->plates_player_two[0].height,
+			scene->plates_player_two[0].length,
+			scene->plates_player_two[0].color);
+
+		DrawCube(
+			scene->plates_player_two[1].pos,
+			scene->plates_player_two[1].width,
+			scene->plates_player_two[1].height,
+			scene->plates_player_two[1].length,
+			scene->plates_player_two[1].color);
+
+		DrawModelEx(
+			scene->player->model,
+			scene->player->pos,
+			scene->player->rotation_axis,
+			scene->player->rotation_angle,
+			scene->player->scale,
+			WHITE);
+
+		DrawModelEx(
+			scene->player_two->model,
+			scene->player_two->pos,
+			scene->player_two->rotation_axis,
+			scene->player_two->rotation_angle,
+			scene->player_two->scale,
+			WHITE);
+
+		if (scene->player_one_toggle) {
+			scene->selection_position.x = Lerp(scene->selection_position.x, scene->player->pos.x, 0.1f);
+			scene->selection_position.y = Lerp(scene->selection_position.y, scene->player->pos.y, 0.1f);
+			scene->selection_position.z = Lerp(scene->selection_position.z, scene->player->pos.z, 0.1f);
+
+			DrawCubeWires(
+				scene->selection_position,
+				scene->player->collision_cube.width,
+				scene->player->collision_cube.height,
+				scene->player->collision_cube.length,
+				BLACK);
+		}
+		else {
+			scene->selection_position.x = Lerp(scene->selection_position.x, scene->player_two->pos.x, 0.1f);
+			scene->selection_position.y = Lerp(scene->selection_position.y, scene->player_two->pos.y, 0.1f);
+			scene->selection_position.z = Lerp(scene->selection_position.z, scene->player_two->pos.z, 0.1f);
+
+			DrawCubeWires(
+				scene->selection_position,
+				scene->player_two->collision_cube.width,
+				scene->player_two->collision_cube.height,
+				scene->player_two->collision_cube.length,
+				BLACK);
+		}
+
+		DrawModelEx(
+			scene->stageboard->model,
+			scene->stageboard->pos,
+			scene->stageboard->rotation_axis,
+			scene->stageboard->rotation_angle,
+			scene->stageboard->scale,
+			scene->stageboard->color);
+
+		if (scene->can_draw_next_stage_plate) {
+			if (!scene->played_puzzle_solved_audio) {
+				scene->played_puzzle_solved_audio = 1;
+				PlaySound(scene->puzzle_solved_audio);
+			}
+
+			scene->next_stage_plate.color.a =
+				(int)floor(Lerp(scene->next_stage_plate.color.a, 255, 0.1f));
+		}
+		else {
+			scene->next_stage_plate.color.a =
+				(int)floor(Lerp(scene->next_stage_plate.color.a, 0, 0.1f));
+		}
+
+		DrawCube(
+			scene->next_stage_plate.pos,
+			scene->next_stage_plate.width,
+			scene->next_stage_plate.height,
+			scene->next_stage_plate.length,
+			scene->next_stage_plate.color);
+
+		EndMode3D();
 	}
-
-	DrawCube(
-		scene->next_stage_plate.pos,
-		scene->next_stage_plate.width,
-		scene->next_stage_plate.height,
-		scene->next_stage_plate.length,
-		scene->next_stage_plate.color);
-
-	EndMode3D();
 
 	if (scene->player->pos.x == scene->next_stage_plate.pos.x &&
 		scene->player->pos.z == scene->next_stage_plate.pos.z &&
 		scene->can_draw_next_stage_plate) {
 		scene->finished_stage = 1;
+		UiDrawText(ui, "THANKS FOR PLAYING!", (Vector2) { WIDTH / 2, HEIGHT / 2 }, WHITE);
+		
+		if (IsKeyPressed(KEY_ENTER)) {
+			scene->accepted_ending = 1;
+		}
 	}
 }
 
